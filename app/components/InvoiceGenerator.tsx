@@ -5,59 +5,18 @@ import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Font, pdf } fr
 import { addDoc , collection } from 'firebase/firestore';
 import { app, db } from '../lib/firebaseConfig';
 import { getAuth } from 'firebase/auth';
-import { CompanySettings, Invoice, StatusType } from '../types/invoiceTypes';
+import { CompanySettings, Invoice, InvoiceData, LineItem, StatusType } from '../types/invoiceTypes';
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-// Register fonts (optional - for better typography)
 // Font.register({
 //   family: 'Roboto',
 //   src: 'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf'
 // });
 
-// Define interfaces
-interface LineItem {
-  id: string;
-  description: string;
-  quantity: number;
-  rate: number;
-  amount: number;
-}
 
-export interface InvoiceData {
-  invoiceNumber: string;
-  invoiceDate: string;
-  dueDate: string;
-  
-  // Company Info
-  companyName: string;
-  companyAddress: string;
-  companyPhone: string;
-  companyEmail: string;
-  
-  // Client Info
-  clientName: string;
-  clientAddress: string;
-  clientPhone: string;
-  clientEmail: string;
-  
-  // Invoice Items
-  items: LineItem[];
-  
-  // Totals
-  subtotal: number;
-  tax: number;
-  taxRate: number;
-  discount: number;
-  total: number;
-  
-  // Notes
-  notes: string;
 
-  status:StatusType
-}
 
-// PDF Styles
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
@@ -67,7 +26,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica',
   },
   
-  // Header Section
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -110,7 +68,6 @@ const styles = StyleSheet.create({
     lineHeight: 1.4,
   },
   
-  // Client and Invoice Info Section
   infoSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -247,7 +204,6 @@ const styles = StyleSheet.create({
     lineHeight: 1.4,
   },
   
-  // Footer
   footer: {
     marginTop: 'auto',
     paddingTop: 20,
@@ -262,11 +218,9 @@ const styles = StyleSheet.create({
   },
 });
 
-// PDF Document Component
 const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      {/* Header Section */}
       <View style={styles.header}>
         <View style={styles.companyInfo}>
           <Text style={styles.companyName}>{invoice.companyName}</Text>
@@ -286,7 +240,6 @@ const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
         </View>
       </View>
 
-      {/* Client Info Section */}
       <View style={styles.infoSection}>
         <View style={styles.clientInfo}>
           <Text style={styles.sectionTitle}>Bill To:</Text>
@@ -299,9 +252,7 @@ const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
         </View>
       </View>
 
-      {/* Items Table */}
       <View style={styles.table}>
-        {/* Table Header */}
         <View style={styles.tableHeader}>
           <Text style={[styles.tableCellHeader, styles.descriptionColumn]}>Description</Text>
           <Text style={[styles.tableCellHeader, styles.quantityColumn]}>Qty</Text>
@@ -309,7 +260,6 @@ const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
           <Text style={[styles.tableCellHeader, styles.amountColumn]}>Amount</Text>
         </View>
         
-        {/* Table Rows */}
         {invoice.items.map((item) => (
           <View key={item.id} style={styles.tableRow}>
             <Text style={[styles.tableCell, styles.descriptionColumn]}>{item.description}</Text>
@@ -320,7 +270,6 @@ const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
         ))}
       </View>
 
-      {/* Totals Section */}
       <View style={styles.totalsSection}>
         <View style={styles.totalsTable}>
           <View style={styles.totalRow}>
@@ -349,7 +298,6 @@ const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
         </View>
       </View>
 
-      {/* Notes Section */}
       {invoice.notes && (
         <View style={styles.notesSection}>
           <Text style={styles.notesTitle}>Notes:</Text>
@@ -357,7 +305,6 @@ const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
         </View>
       )}
 
-      {/* Footer */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           {
@@ -369,7 +316,6 @@ const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
   </Document>
 );
 
-// Main Component
 const InvoicePDFGenerator: React.FC<{callback?: (data:InvoiceData) => void; settings?: CompanySettings;}> = ({
   settings,callback = () => {}}) => {
 
@@ -498,19 +444,18 @@ const InvoicePDFGenerator: React.FC<{callback?: (data:InvoiceData) => void; sett
     const pdfLinkRef = useRef<PDFDownloadLink | null>(null);
 
   const handleCreateAndDownload = async () => {
-  // Save invoice to Firestore
   const auth = getAuth(app);
   const userID = auth.currentUser?.uid;
 
   if (userID) {
     if(invoiceData.total >= 0.1){
 try {
-      await addDoc(collection(db, "users", userID, "invoices"), invoiceData);
+      await addToFirestore()
       toast.success("Invoice saved to Firestore. Downloading PDF...");
       invoiceData.status = "sent";
+      
 
-      // Trigger PDF download
-       const blob = await pdf(<InvoicePDF invoice={invoiceData} />).toBlob();
+      const blob = await pdf(<InvoicePDF invoice={invoiceData} />).toBlob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -578,7 +523,6 @@ try {
               </div>
             </div>
 
-            {/* Company Info */}
             <div className="mb-6">
               <h3 className="text-lg font-bold text-black mb-3">Company Information</h3>
               <div className="space-y-3">
@@ -615,7 +559,6 @@ try {
               </div>
             </div>
 
-            {/* Client Info */}
             <div className="mb-6">
               <h3 className="text-lg font-bold text-black mb-3">Client Information</h3>
               <div className="space-y-3">
@@ -789,17 +732,7 @@ try {
 >
   Create and Download Invoice PDF
 </button>
-{/* w-full bg-blue-600 text-white py-4 px-6 rounded-lg font-black text-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-[1.02] transition-all duration-200 border-2 border-blue-700 text-center block */}
-            {/* <PDFDownloadLink
-              document={<InvoicePDF invoice={invoiceData} />}
-              fileName={`invoice-${invoiceData.invoiceNumber}.pdf`}
-              ref={pdfLinkRef}
-              className="hidden"
-            >
-              {({ blob, url, loading, error }) =>
-                loading ? 'Generating PDF...' : 'Create and Download Invoice PDF'
-              }
-            </PDFDownloadLink> */}
+
 
             {/* Instructions */}
             <div className="mt-6 bg-blue-50 border-2 border-blue-200 rounded-lg p-4">

@@ -1,8 +1,7 @@
-import { collection, deleteDoc, doc, DocumentData, getDocs, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, DocumentData, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { app, db } from '../lib/firebaseConfig';
-import { InvoiceData } from '../components/InvoiceGenerator';
-import { Invoice, InvoicesWithFirestoreID, StatusType } from '../types/invoiceTypes';
+import { Invoice, InvoicesWithFirestoreID, StatusType , InvoiceData } from '../types/invoiceTypes';
 
 export async function getSavedInvoicesFromFirestore(userID: string): Promise<DocumentData | null> {
   console.log(userID);
@@ -44,6 +43,27 @@ export async function deleteInvoiceFromFirestore(invoiceId: string): Promise<voi
   }
 }
 
+export async function uploadImageToFirestore(e: React.ChangeEvent<HTMLInputElement>): Promise<void> {
+    const image = e.target.files?.[0]
+    const auth = getAuth(app);
+    const userId = auth.currentUser?.uid;
+    if(!image) return;
+    const reader = new FileReader();
+  reader.onloadend = async () => {
+    const base64String = reader.result?.toString().split(",")[1];
+    const auth = getAuth(app);
+    const userId = auth.currentUser?.uid;
+
+    if (userId) {
+      await setDoc(
+        doc(db, "users", userId, "settings", "logo"),
+        { image: base64String }
+      );
+      localStorage.setItem("logo" ,base64String ?? "")
+    }
+  };
+  reader.readAsDataURL(image);
+}
 export async function deleteAllInvoicesFromFirestore(invoiceIds: string[]): Promise<void> {
   const auth = getAuth(app);
   const userId = auth.currentUser?.uid;
