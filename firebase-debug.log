@@ -1,0 +1,21 @@
+[debug] [2025-05-27T19:16:09.620Z] ----------------------------------------------------------------------
+[debug] [2025-05-27T19:16:09.622Z] Command:       /opt/homebrew/Cellar/node/23.11.0/bin/node /opt/homebrew/bin/firebase init
+[debug] [2025-05-27T19:16:09.622Z] CLI Version:   14.4.0
+[debug] [2025-05-27T19:16:09.622Z] Platform:      darwin
+[debug] [2025-05-27T19:16:09.622Z] Node Version:  v23.11.0
+[debug] [2025-05-27T19:16:09.622Z] Time:          Tue May 27 2025 15:16:09 GMT-0400 (Eastern Daylight Time)
+[debug] [2025-05-27T19:16:09.622Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-27T19:16:09.625Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-27T19:16:09.625Z] > authorizing via signed-in user (matthewaureliustjoa@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/matthewtjoa/Documents/invoicely/invoicely-client
+
