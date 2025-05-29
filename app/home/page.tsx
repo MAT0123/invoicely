@@ -1,26 +1,35 @@
 'use client';
 
-import React, { useState, useEffect, useRef, use } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import InvoicePDFGenerator from '../components/InvoiceGenerator';
-import { collection, deleteDoc, doc, DocumentData,  getDocs, updateDoc } from 'firebase/firestore';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  DocumentData,
+  getDocs
+} from 'firebase/firestore';
 import { app, db } from '../lib/firebaseConfig';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { convertInvoiceDataToInvoice } from '../lib/convert';
 import { useRouter } from 'next/navigation';
 import AllInvoices from '../components/AllInvoices';
 import { getStatusColor } from '../lib/styleVariable';
-import { Invoice , TabType , CompanySettings , InvoicesWithFirestoreID , LineItem , InvoiceData} from  '../types/invoiceTypes'
+import {
+  Invoice,
+  TabType,
+  CompanySettings,
+  InvoicesWithFirestoreID,
+  InvoiceData,
+} from '../types/invoiceTypes';
 import Navigation from '../components/Navigation';
 import Header from '../components/Header';
-import {  dashboardStatsFN } from '../variables/dashboardStats';
+import { dashboardStatsFN } from '../variables/dashboardStats';
 import Dashboard from '../components/Dashboard';
 import DataManagement from '../components/DataManagement';
 import Settings from '../components/Settings';
 import { useInvoice } from '../hooks/useInvoice';
 import { getLogoFromFirestore } from '../lib/firebaseService';
-
-
-
 
 const InvoiceDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
@@ -32,7 +41,7 @@ const InvoiceDashboard: React.FC = () => {
     companyEmail: '',
     defaultTaxRate: 10,
     invoicePrefix: 'INV-',
-    paymentTerms: ''
+    paymentTerms: '',
   });
 
   const [newInvoice, setNewInvoice] = useState<Partial<Invoice>>({
@@ -42,278 +51,207 @@ const InvoiceDashboard: React.FC = () => {
     invoiceDate: new Date().toISOString().split('T')[0],
     dueDate: '',
     status: 'draft',
-    items: [{
-      id: '1',
-      description: '',
-      quantity: 1,
-      rate: 0,
-      amount: 0
-    }],
+    items: [
+      {
+        id: '1',
+        description: '',
+        quantity: 1,
+        rate: 0,
+        amount: 0,
+      },
+    ],
     subtotal: 0,
     tax: 0,
     taxRate: 10,
     discount: 0,
     total: 0,
-    notes: ''
+    notes: '',
   });
-  async function getSavedInvoicesFromFirestore(userID:string): Promise<DocumentData | null> {
-    console.log(userID)
+  async function getSavedInvoicesFromFirestore(
+    userID: string,
+  ): Promise<DocumentData | null> {
+    console.log(userID);
     if (db) {
-      const item = await getDocs(collection(db, "users" , userID ,"invoices"));
-     const invoices = item.docs.map(doc => ({
-            id: doc.id , data: doc.data() as InvoiceData
-        }));
+      const item = await getDocs(collection(db, 'users', userID, 'invoices'));
+      const invoices = item.docs.map((doc) => ({
+        id: doc.id,
+        data: doc.data() as InvoiceData,
+      }));
 
-      return invoices
+      return invoices;
     } else {
-      console.warn("User ID is undefined. Cannot fetch invoices.");
-      return null
+      console.warn('User ID is undefined. Cannot fetch invoices.');
+      return null;
     }
   }
-  const router = useRouter()
+  const router = useRouter();
 
-    const [mounted , setMounted ] = useState(false)
-    const hasInitialized = useRef(false);
-    const [logo , setLogo] = useState("")
-    useEffect(() => { 
-  const auth = getAuth(app);
+  const [mounted, setMounted] = useState(false);
+  const hasInitialized = useRef(false);
+  const [logo, setLogo] = useState('');
+  useEffect(() => {
+    const auth = getAuth(app);
 
-  const unsubscribe = onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const userID = user.uid;
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userID = user.uid;
 
-      const data = await getSavedInvoicesFromFirestore(userID) as InvoicesWithFirestoreID[];
-      const convertedData = data.map((invoice) =>
-        convertInvoiceDataToInvoice(invoice.data, invoice.id)
-      );
-      setInvoices(convertedData);
+        const data = (await getSavedInvoicesFromFirestore(
+          userID,
+        )) as InvoicesWithFirestoreID[];
+        const convertedData = data.map((invoice) =>
+          convertInvoiceDataToInvoice(invoice.data, invoice.id),
+        );
+        setInvoices(convertedData);
 
-      const savedSettings = localStorage.getItem('companySettings');
-      const savedLogo = localStorage.getItem("logo")
+        const savedSettings = localStorage.getItem('companySettings');
+        const savedLogo = localStorage.getItem('logo');
 
-      if (savedLogo) {
-        setLogo(savedLogo)
+        if (savedLogo) {
+          setLogo(savedLogo);
+        } else {
+          const res = await getLogoFromFirestore();
+          if (res != '') {
+            setLogo(res);
+          }
+        }
 
-      }else{
-       const res = await getLogoFromFirestore()
-       if(res != ""){
-         setLogo(res)
-       }
+        if (savedSettings) {
+          setSettings(JSON.parse(savedSettings));
+          console.log(
+            'Loaded settings from localStorage:',
+            JSON.parse(savedSettings),
+          );
+        }
+      } else {
+        router.push('/');
       }
+      hasInitialized.current = true;
+    });
 
-      if (savedSettings) {
-        setSettings(JSON.parse(savedSettings));
-        console.log("Loaded settings from localStorage:", JSON.parse(savedSettings));
-      }
-    } else {
-       router.push('/');
-    }
-    hasInitialized.current = true;
-  });
-
-  return () => unsubscribe();
-}, []);
-
-
-
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('invoices', JSON.stringify(invoices));
   }, [invoices]);
 
   useEffect(() => {
-    if(hasInitialized.current){
-    localStorage.setItem('companySettings', JSON.stringify(settings));
-    console.log("saving settings")
+    if (hasInitialized.current) {
+      localStorage.setItem('companySettings', JSON.stringify(settings));
+      console.log('saving settings');
     }
-    
   }, [settings]);
-//     const {
-//   generateInvoiceNumber,
-//   calculateTotals,
-//   updateNewInvoiceItem,
-//   addNewInvoiceItem,
-//   removeNewInvoiceItem,
-//   updateInvoiceStatus,
-//   deleteInvoice,
-//   deleteAllInvoices
-// } = useInvoice(invoices, setInvoices, settings, setNewInvoice);
+  const {
+    generateInvoiceNumber,
+    calculateTotals,
+    updateNewInvoiceItem,
+    addNewInvoiceItem,
+    removeNewInvoiceItem,
+    updateInvoiceStatus,
+    deleteInvoice,
+    deleteAllInvoices,
+  } = useInvoice(invoices, setInvoices, settings, setNewInvoice);
 
-  const generateInvoiceNumber = () => {
-    const lastInvoice = invoices
-      .filter(inv => inv.invoiceNumber.startsWith(settings.invoicePrefix))
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
-    
-    if (!lastInvoice) {
-      return `${settings.invoicePrefix}001`;
-    }
-    
-    const lastNumber = parseInt(lastInvoice.invoiceNumber.replace(settings.invoicePrefix, ''));
-    return `${settings.invoicePrefix}${String(lastNumber + 1).padStart(3, '0')}`;
-  };
-
-  const calculateTotals = (items: LineItem[], taxRate: number, discount: number) => {
-    const subtotal = items.reduce((sum, item) => sum + item.amount, 0);
-    const tax = subtotal * (taxRate / 100);
-    const total = subtotal + tax - discount;
-    return { subtotal, tax, total };
-  };
-
-  const updateNewInvoiceItem = (id: string, field: keyof LineItem, value: string | number) => {
-    setNewInvoice(prev => ({
-      ...prev,
-      items: prev.items!.map(item => {
-        if (item.id === id) {
-          const updatedItem = { ...item, [field]: value };
-          if (field === 'quantity' || field === 'rate') {
-            updatedItem.amount = updatedItem.quantity * updatedItem.rate;
-          }
-          return updatedItem;
-        }
-        return item;
-      })
-    }));
-  };
-
-  const addNewInvoiceItem = () => {
-    const newItem: LineItem = {
-      id: Date.now().toString(),
-      description: '',
-      quantity: 1,
-      rate: 0,
-      amount: 0
-    };
-    setNewInvoice(prev => ({
-      ...prev,
-      items: [...(prev.items || []), newItem]
-    }));
-  };
-
-  const removeNewInvoiceItem = (id: string) => {
-    setNewInvoice(prev => ({
-      ...prev,
-      items: prev.items!.filter(item => item.id !== id)
-    }));
-  };
-  
-
-  const updateInvoiceStatus = async (id: string, status: Invoice['status']) => {
-    setInvoices(prev => prev.map(inv => 
-      inv.id === id ? { ...inv, status, updatedAt: new Date().toISOString() } : inv
-    ));
-    const auth = getAuth(app)
-    const userID = auth.currentUser?.uid
-    if(userID){
-        const res = await updateDoc(doc(db, "users", userID, "invoices", id)  , {
-        status
-    })
-    }
-  
-  };
-
-  const deleteInvoice = async (invoiceId: string) => {
-  if (confirm('Are you sure you want to delete this invoice?')) {
-    setInvoices(prev => prev.filter(inv => inv.id !== invoiceId));
-
+  const deleteAllInvoice = async () => {
     const auth = getAuth(app);
     const userId = auth.currentUser?.uid;
 
     if (userId) {
       try {
-        await deleteDoc(doc(db, "users", userId, "invoices", invoiceId));
-        console.log("Invoice deleted:", invoiceId);
+        await Promise.all(
+          invoices.map((inv) =>
+            deleteDoc(doc(db, 'users', userId, 'invoices', inv.id)),
+          ),
+        );
+        setInvoices([]);
       } catch (error) {
-        console.error("Error deleting invoice:", error);
+        console.error('Error deleting all invoices:', error);
       }
     }
-  }
-};
-   const deleteAllInvoice = async () => {
+  };
 
-
-  const auth = getAuth(app);
-  const userId = auth.currentUser?.uid;
-
-  if (userId) {
-    try {
-      await Promise.all(
-        invoices.map(inv =>
-          deleteDoc(doc(db, "users", userId, "invoices", inv.id))
-        )
-      );
-      setInvoices([]); 
-    } catch (error) {
-      console.error("Error deleting all invoices:", error);
-    }
-  }
-};
-
-
-  const dashboardStats = dashboardStatsFN(invoices)
+  const dashboardStats = dashboardStatsFN(invoices);
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <Header companyName={settings.companyName} totalRevenue={dashboardStats.totalRevenue} />
+      <Header
+        companyName={settings.companyName}
+        totalRevenue={dashboardStats.totalRevenue}
+      />
 
       {/* Navigation */}
-      <Navigation activeTab={activeTab} setActiveTab={setActiveTab}/>
+      <Navigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
         {/* Dashboard Tab */}
         {activeTab === 'dashboard' && (
-          <Dashboard invoices={invoices} dashboardStats={dashboardStats}/>
+          <Dashboard invoices={invoices} dashboardStats={dashboardStats} />
         )}
 
         {/* Create Invoice Tab */}
         {activeTab === 'create' && (
-            <InvoicePDFGenerator
+          <InvoicePDFGenerator
             settings={settings}
             image={logo}
-            callback={(data) =>  {
-                
-                setInvoices(prev => [
-                    ...prev ,
-                    {
-                    id: data.invoiceNumber,
-                    invoiceNumber: data.invoiceNumber,
-                    clientName: data.clientName,
-                    clientEmail: data.companyEmail,
-                    invoiceDate: data.invoiceDate,
-                    dueDate: data.dueDate,
-                    status: data.status,
-                    items: data.items,
-                    subtotal: data.subtotal,
-                    tax: data.tax,
-                    taxRate: data.taxRate,
-                    discount: data.discount,
-                    total: data.total,
-                    notes: data.notes,
-                    createdAt: new Date().toISOString().slice(0, 10),
-                    updatedAt: new Date().toISOString().slice(0, 10)
-                    }
-                    
-                ])                
-            }}/>
+            callback={(data) => {
+              setInvoices((prev) => [
+                ...prev,
+                {
+                  id: data.invoiceNumber,
+                  invoiceNumber: data.invoiceNumber,
+                  clientName: data.clientName,
+                  clientEmail: data.companyEmail,
+                  invoiceDate: data.invoiceDate,
+                  dueDate: data.dueDate,
+                  status: data.status,
+                  items: data.items,
+                  subtotal: data.subtotal,
+                  tax: data.tax,
+                  taxRate: data.taxRate,
+                  discount: data.discount,
+                  total: data.total,
+                  notes: data.notes,
+                  createdAt: new Date().toISOString().slice(0, 10),
+                  updatedAt: new Date().toISOString().slice(0, 10),
+                },
+              ]);
+            }}
+          />
         )}
 
         {/* All Invoices Tab */}
         {activeTab === 'invoices' && (
-          <AllInvoices invoices={invoices} setActiveTab={setActiveTab} updateInvoiceStatus={updateInvoiceStatus} getStatusColor={getStatusColor} setNewInvoice={setNewInvoice} deleteInvoice={deleteInvoice} />
+          <AllInvoices
+            invoices={invoices}
+            setActiveTab={setActiveTab}
+            updateInvoiceStatus={updateInvoiceStatus}
+            getStatusColor={getStatusColor}
+            setNewInvoice={setNewInvoice}
+            deleteInvoice={deleteInvoice}
+          />
         )}
-    
+
         {/* Settings Tab */}
         {activeTab === 'settings' && (
-
-
-          <Settings settings={settings} setSettings={setSettings} dataManagementComponent={
-             <DataManagement invoices={invoices} settings={settings} setInvoices={setInvoices} setSettings={setSettings } deleteAllInvoice={deleteAllInvoice} />
-          }/>
+          <Settings
+            settings={settings}
+            setSettings={setSettings}
+            dataManagementComponent={
+              <DataManagement
+                invoices={invoices}
+                settings={settings}
+                setInvoices={setInvoices}
+                setSettings={setSettings}
+                deleteAllInvoice={deleteAllInvoice}
+              />
+            }
+          />
         )}
       </main>
     </div>
   );
 };
 
-export default InvoiceDashboard; 
+export default InvoiceDashboard;

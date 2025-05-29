@@ -1,8 +1,10 @@
+import { v4 as uuidv4 } from 'uuid';
+import { Invoice, StatusType, InvoiceData } from '../types/invoiceTypes';
 
-import { v4 as uuidv4 } from 'uuid'; 
-import { Invoice, StatusType , InvoiceData } from "../types/invoiceTypes";
-
-export function convertInvoiceDataToInvoice(data: InvoiceData , id:string): Invoice {
+export function convertInvoiceDataToInvoice(
+  data: InvoiceData,
+  id: string,
+): Invoice {
   const timestamp = new Date().toISOString();
 
   return {

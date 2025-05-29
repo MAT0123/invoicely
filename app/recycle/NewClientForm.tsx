@@ -14,16 +14,15 @@ const NewClientForm: React.FC = () => {
     name: '',
     contactNumber: '',
     email: '',
-    address: ''
+    address: '',
   });
 
   const [errors, setErrors] = useState<Partial<ClientFormData>>({});
 
   const handleInputChange = (field: keyof ClientFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
+      setErrors((prev) => ({ ...prev, [field]: '' }));
     }
   };
 
@@ -62,7 +61,7 @@ const NewClientForm: React.FC = () => {
         name: '',
         contactNumber: '',
         email: '',
-        address: ''
+        address: '',
       });
     }
   };
@@ -72,7 +71,7 @@ const NewClientForm: React.FC = () => {
       name: '',
       contactNumber: '',
       email: '',
-      address: ''
+      address: '',
     });
     setErrors({});
   };
@@ -83,7 +82,9 @@ const NewClientForm: React.FC = () => {
         {/* Header */}
         <div className="mb-8">
           <nav className="text-sm text-gray-700 mb-4">
-            <span className="hover:text-black cursor-pointer font-medium">Clients</span>
+            <span className="hover:text-black cursor-pointer font-medium">
+              Clients
+            </span>
             <span className="mx-2 text-black">/</span>
             <span className="text-black font-semibold">New Client</span>
           </nav>
@@ -94,7 +95,6 @@ const NewClientForm: React.FC = () => {
         {/* Main Form Container */}
         <div className="bg-white shadow-lg rounded-lg border-2 border-gray-400">
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
-            
             {/* Client Name */}
             <div className="space-y-2">
               <label className="block text-sm font-bold text-black">
@@ -105,14 +105,16 @@ const NewClientForm: React.FC = () => {
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                  errors.name 
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                  errors.name
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                     : 'border-gray-400 focus:border-blue-600'
                 }`}
                 placeholder="Enter client name"
               />
               {errors.name && (
-                <p className="text-red-600 text-sm font-medium">{errors.name}</p>
+                <p className="text-red-600 text-sm font-medium">
+                  {errors.name}
+                </p>
               )}
             </div>
 
@@ -124,16 +126,20 @@ const NewClientForm: React.FC = () => {
               <input
                 type="tel"
                 value={formData.contactNumber}
-                onChange={(e) => handleInputChange('contactNumber', e.target.value)}
+                onChange={(e) =>
+                  handleInputChange('contactNumber', e.target.value)
+                }
                 className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                  errors.contactNumber 
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                  errors.contactNumber
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                     : 'border-gray-400 focus:border-blue-600'
                 }`}
                 placeholder="Enter contact number"
               />
               {errors.contactNumber && (
-                <p className="text-red-600 text-sm font-medium">{errors.contactNumber}</p>
+                <p className="text-red-600 text-sm font-medium">
+                  {errors.contactNumber}
+                </p>
               )}
             </div>
 
@@ -147,14 +153,16 @@ const NewClientForm: React.FC = () => {
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                  errors.email 
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                  errors.email
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                     : 'border-gray-400 focus:border-blue-600'
                 }`}
                 placeholder="Enter email address"
               />
               {errors.email && (
-                <p className="text-red-600 text-sm font-medium">{errors.email}</p>
+                <p className="text-red-600 text-sm font-medium">
+                  {errors.email}
+                </p>
               )}
             </div>
 
@@ -168,14 +176,16 @@ const NewClientForm: React.FC = () => {
                 onChange={(e) => handleInputChange('address', e.target.value)}
                 rows={4}
                 className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 resize-none text-black font-medium ${
-                  errors.address 
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                  errors.address
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                     : 'border-gray-400 focus:border-blue-600'
                 }`}
                 placeholder="Enter full address including city, state, and postal code"
               />
               {errors.address && (
-                <p className="text-red-600 text-sm font-medium">{errors.address}</p>
+                <p className="text-red-600 text-sm font-medium">
+                  {errors.address}
+                </p>
               )}
             </div>
 
@@ -185,12 +195,22 @@ const NewClientForm: React.FC = () => {
                 type="submit"
                 className="flex-1 bg-blue-600 text-white py-4 px-6 rounded-lg font-black text-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-[1.02] transition-all duration-200 border-2 border-blue-700"
               >
-                <svg className="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                <svg
+                  className="w-5 h-5 inline mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
                 </svg>
                 Create Client
               </button>
-              
+
               <button
                 type="button"
                 onClick={handleCancel}
@@ -203,7 +223,8 @@ const NewClientForm: React.FC = () => {
             {/* Required Fields Note */}
             <div className="pt-4 border-t-2 border-gray-300">
               <p className="text-sm text-black font-medium">
-                <span className="text-red-600 font-bold">*</span> Required fields
+                <span className="text-red-600 font-bold">*</span> Required
+                fields
               </p>
             </div>
           </form>
@@ -212,13 +233,26 @@ const NewClientForm: React.FC = () => {
         {/* Additional Info Card */}
         <div className="mt-6 bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
           <div className="flex items-start">
-            <svg className="w-6 h-6 text-blue-600 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              className="w-6 h-6 text-blue-600 mr-3 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             <div>
-              <h3 className="text-lg font-bold text-black mb-2">Client Information</h3>
+              <h3 className="text-lg font-bold text-black mb-2">
+                Client Information
+              </h3>
               <p className="text-black font-medium">
-                This information will be used for invoicing and communication. Make sure all details are accurate and up-to-date.
+                This information will be used for invoicing and communication.
+                Make sure all details are accurate and up-to-date.
               </p>
             </div>
           </div>

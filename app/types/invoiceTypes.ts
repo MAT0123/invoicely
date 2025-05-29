@@ -1,4 +1,3 @@
-
 export interface LineItem {
   id: string;
   description: string;
@@ -7,38 +6,28 @@ export interface LineItem {
   amount: number;
 }
 
-
 export interface InvoiceData {
   invoiceNumber: string;
   invoiceDate: string;
   dueDate: string;
-  
-  // Company Info
   companyName: string;
   companyAddress: string;
   companyPhone: string;
   companyEmail: string;
-  
-  // Client Info
   clientName: string;
   clientAddress: string;
   clientPhone: string;
   clientEmail: string;
-  
-  // Invoice Items
   items: LineItem[];
-  
-  // Totals
+
   subtotal: number;
   tax: number;
   taxRate: number;
   discount: number;
   total: number;
-  
-  // Notes
   notes: string;
 
-  status:StatusType
+  status: StatusType;
 }
 export interface InvoicesWithFirestoreID {
   data: InvoiceData;
