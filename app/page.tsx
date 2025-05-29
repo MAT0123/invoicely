@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import InvoiceForm from "./recycle/CreateInvoice";
-import NewClientForm from "./NewClientForm";
+import NewClientForm from "./recycle/NewClientForm";
 
 import InvoicePDFGenerator from "./components/InvoiceGenerator";
 import { useContext, useEffect, useState } from "react";

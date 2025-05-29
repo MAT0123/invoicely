@@ -1,4 +1,5 @@
-import { Invoice } from "../home/page";
+import { Invoice } from "../types/invoiceTypes";
+
 
   
 export const getStatusColor = (status: Invoice['status']) => {

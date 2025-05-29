@@ -5,7 +5,7 @@ import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Font, pdf } fr
 import { addDoc , collection } from 'firebase/firestore';
 import { app, db } from '../lib/firebaseConfig';
 import { getAuth } from 'firebase/auth';
-import { CompanySettings, Invoice, StatusType } from '../home/page';
+import { CompanySettings, Invoice, StatusType } from '../types/invoiceTypes';
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 

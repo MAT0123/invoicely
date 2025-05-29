@@ -1,6 +1,7 @@
 import { InvoiceData } from "../components/InvoiceGenerator";
-import { Invoice, StatusType } from "../home/page";
+
 import { v4 as uuidv4 } from 'uuid'; 
+import { Invoice, StatusType } from "../types/invoiceTypes";
 
 export function convertInvoiceDataToInvoice(data: InvoiceData , id:string): Invoice {
   const timestamp = new Date().toISOString();
