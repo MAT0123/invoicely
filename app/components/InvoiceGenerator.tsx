@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Font, pdf } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink, Font, pdf , Image } from '@react-pdf/renderer';
 import { addDoc , collection } from 'firebase/firestore';
 import { app, db } from '../lib/firebaseConfig';
 import { getAuth } from 'firebase/auth';
@@ -218,7 +218,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
+const InvoicePDF: React.FC<{ invoice: InvoiceData  , image?:string }> = ({ invoice , image}) => (
+  
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.header}>
@@ -231,6 +232,12 @@ const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
           </Text>
         </View>
         <View>
+          {
+            
+            image && (
+              <Image src={image} style={{ width: 80, height: 80,  marginBottom: 8 }}/>
+            )
+          }
           <Text style={styles.invoiceTitle}>INVOICE</Text>
           <Text style={styles.invoiceDetails}>
             Invoice #: {invoice.invoiceNumber}{'\n'}
@@ -316,8 +323,8 @@ const InvoicePDF: React.FC<{ invoice: InvoiceData  }> = ({ invoice }) => (
   </Document>
 );
 
-const InvoicePDFGenerator: React.FC<{callback?: (data:InvoiceData) => void; settings?: CompanySettings;}> = ({
-  settings,callback = () => {}}) => {
+const InvoicePDFGenerator: React.FC<{callback?: (data:InvoiceData) => void; settings?: CompanySettings; image?:string}> = ({
+  settings,callback = () => {} , image}) => {
 
  const [invoiceData, setInvoiceData] = useState<InvoiceData>({
     invoiceNumber: settings?.invoicePrefix ?? "",
@@ -345,7 +352,6 @@ const InvoicePDFGenerator: React.FC<{callback?: (data:InvoiceData) => void; sett
     notes: ''
   });
   const [mounted , setMounted] = useState(false)
-  // Fixed: Move calculateTotals inside useEffect to avoid stale closure
   React.useEffect(() => {
   const calculateTotals = () => {
     const items = invoiceData.items || [];
@@ -455,7 +461,7 @@ try {
       invoiceData.status = "sent";
       
 
-      const blob = await pdf(<InvoicePDF invoice={invoiceData} />).toBlob();
+      const blob = await pdf(<InvoicePDF invoice={invoiceData} image={image}/>).toBlob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -464,6 +470,7 @@ try {
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
+      localStorage.removeItem("invoiceData")
       
     } catch (error) {
       console.error("Error saving to Firestore:", error);

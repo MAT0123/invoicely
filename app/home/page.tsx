@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, use } from 'react';
 import InvoicePDFGenerator from '../components/InvoiceGenerator';
 import { collection, deleteDoc, doc, DocumentData,  getDocs, updateDoc } from 'firebase/firestore';
 import { app, db } from '../lib/firebaseConfig';
@@ -17,11 +17,11 @@ import Dashboard from '../components/Dashboard';
 import DataManagement from '../components/DataManagement';
 import Settings from '../components/Settings';
 import { useInvoice } from '../hooks/useInvoice';
+import { getLogoFromFirestore } from '../lib/firebaseService';
 
 
 
 
-// Main Dashboard Component
 const InvoiceDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [invoices, setInvoices] = useState<Invoice[]>([]);
@@ -74,29 +74,38 @@ const InvoiceDashboard: React.FC = () => {
 
     const [mounted , setMounted ] = useState(false)
     const hasInitialized = useRef(false);
-
-    useEffect(() => {
+    const [logo , setLogo] = useState("")
+    useEffect(() => { 
   const auth = getAuth(app);
 
   const unsubscribe = onAuthStateChanged(auth, async (user) => {
     if (user) {
       const userID = user.uid;
 
-      // 1. Load invoices from Firestore
       const data = await getSavedInvoicesFromFirestore(userID) as InvoicesWithFirestoreID[];
       const convertedData = data.map((invoice) =>
         convertInvoiceDataToInvoice(invoice.data, invoice.id)
       );
       setInvoices(convertedData);
 
-      // 2. Load settings from localStorage
       const savedSettings = localStorage.getItem('companySettings');
+      const savedLogo = localStorage.getItem("logo")
+
+      if (savedLogo) {
+        setLogo(savedLogo)
+
+      }else{
+       const res = await getLogoFromFirestore()
+       if(res != ""){
+         setLogo(res)
+       }
+      }
+
       if (savedSettings) {
         setSettings(JSON.parse(savedSettings));
         console.log("Loaded settings from localStorage:", JSON.parse(savedSettings));
       }
     } else {
-      // Optionally redirect if not logged in
        router.push('/');
     }
     hasInitialized.current = true;
@@ -108,7 +117,6 @@ const InvoiceDashboard: React.FC = () => {
 
 
 
-  // Save to localStorage whenever data changes
   useEffect(() => {
     localStorage.setItem('invoices', JSON.stringify(invoices));
   }, [invoices]);
@@ -144,7 +152,6 @@ const InvoiceDashboard: React.FC = () => {
     return `${settings.invoicePrefix}${String(lastNumber + 1).padStart(3, '0')}`;
   };
 
-  // Calculate invoice totals
   const calculateTotals = (items: LineItem[], taxRate: number, discount: number) => {
     const subtotal = items.reduce((sum, item) => sum + item.amount, 0);
     const tax = subtotal * (taxRate / 100);
@@ -152,7 +159,6 @@ const InvoiceDashboard: React.FC = () => {
     return { subtotal, tax, total };
   };
 
-  // Update new invoice item
   const updateNewInvoiceItem = (id: string, field: keyof LineItem, value: string | number) => {
     setNewInvoice(prev => ({
       ...prev,
@@ -169,7 +175,6 @@ const InvoiceDashboard: React.FC = () => {
     }));
   };
 
-  // Add new item to invoice
   const addNewInvoiceItem = () => {
     const newItem: LineItem = {
       id: Date.now().toString(),
@@ -184,7 +189,6 @@ const InvoiceDashboard: React.FC = () => {
     }));
   };
 
-  // Remove item from invoice
   const removeNewInvoiceItem = (id: string) => {
     setNewInvoice(prev => ({
       ...prev,
@@ -193,7 +197,6 @@ const InvoiceDashboard: React.FC = () => {
   };
   
 
-  // Update invoice status
   const updateInvoiceStatus = async (id: string, status: Invoice['status']) => {
     setInvoices(prev => prev.map(inv => 
       inv.id === id ? { ...inv, status, updatedAt: new Date().toISOString() } : inv
@@ -208,10 +211,8 @@ const InvoiceDashboard: React.FC = () => {
   
   };
 
-  // Delete invoice
   const deleteInvoice = async (invoiceId: string) => {
   if (confirm('Are you sure you want to delete this invoice?')) {
-    // Update local state
     setInvoices(prev => prev.filter(inv => inv.id !== invoiceId));
 
     const auth = getAuth(app);
@@ -269,6 +270,7 @@ const InvoiceDashboard: React.FC = () => {
         {activeTab === 'create' && (
             <InvoicePDFGenerator
             settings={settings}
+            image={logo}
             callback={(data) =>  {
                 
                 setInvoices(prev => [
@@ -291,7 +293,8 @@ const InvoiceDashboard: React.FC = () => {
                     createdAt: new Date().toISOString().slice(0, 10),
                     updatedAt: new Date().toISOString().slice(0, 10)
                     }
-                ])
+                    
+                ])                
             }}/>
         )}
 

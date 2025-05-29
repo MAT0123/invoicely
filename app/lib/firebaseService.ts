@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, DocumentData, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, DocumentData, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { app, db } from '../lib/firebaseConfig';
 import { Invoice, InvoicesWithFirestoreID, StatusType , InvoiceData } from '../types/invoiceTypes';
@@ -44,13 +44,13 @@ export async function deleteInvoiceFromFirestore(invoiceId: string): Promise<voi
 }
 
 export async function uploadImageToFirestore(e: React.ChangeEvent<HTMLInputElement>): Promise<void> {
-    const image = e.target.files?.[0]
+    const image = e.target.files?.item(0)
     const auth = getAuth(app);
     const userId = auth.currentUser?.uid;
     if(!image) return;
     const reader = new FileReader();
   reader.onloadend = async () => {
-    const base64String = reader.result?.toString().split(",")[1];
+    const base64String = reader.result?.toString();
     const auth = getAuth(app);
     const userId = auth.currentUser?.uid;
 
@@ -59,10 +59,23 @@ export async function uploadImageToFirestore(e: React.ChangeEvent<HTMLInputEleme
         doc(db, "users", userId, "settings", "logo"),
         { image: base64String }
       );
+
       localStorage.setItem("logo" ,base64String ?? "")
     }
   };
   reader.readAsDataURL(image);
+}
+export async function getLogoFromFirestore(): Promise<string> {
+  const auth = getAuth(app);
+  const userId = auth.currentUser?.uid;
+
+  if (userId) {
+    const res = await getDoc(doc(db , "users", userId, "settings", "logo"))
+    localStorage.setItem("logo" , res.get("image"))
+    console.log(res)
+    return res.get("image") as string
+  }
+  return ""
 }
 export async function deleteAllInvoicesFromFirestore(invoiceIds: string[]): Promise<void> {
   const auth = getAuth(app);

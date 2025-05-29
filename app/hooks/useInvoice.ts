@@ -105,7 +105,7 @@ export const useInvoice = (
     }
   }, [setInvoices]);
 
-  // Delete all invoices
+  
   const deleteAllInvoices = useCallback(async () => {
     const auth = getAuth(app);
     const userId = auth.currentUser?.uid;
