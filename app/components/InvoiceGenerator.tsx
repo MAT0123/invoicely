@@ -14,7 +14,8 @@ import {
 } from '@react-pdf/renderer';
 import { addDoc, collection } from 'firebase/firestore';
 import { app, db } from '../lib/firebaseConfig';
-import { getAuth } from 'firebase/auth';
+import { getToken, initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
+import { getAuth, RecaptchaVerifier } from 'firebase/auth';
 import {
   CompanySettings,
   Invoice,
@@ -24,6 +25,8 @@ import {
 } from '../types/invoiceTypes';
 import toast, { Toaster } from 'react-hot-toast';
 import { InvoicePDF } from './InvoiceTemplate';
+import { error } from 'console';
+import { getAppCheckToken } from '../lib/firebaseService';
 
 Font.register({
   family: 'Roboto',
@@ -34,7 +37,7 @@ const InvoicePDFGenerator: React.FC<{
   callback?: (data: InvoiceData) => void;
   settings?: CompanySettings;
   image?: string;
-}> = ({ settings, callback = () => {}, image }) => {
+}> = ({ settings, callback = () => { }, image }) => {
   const [invoiceData, setInvoiceData] = useState<InvoiceData>({
     invoiceNumber: settings?.invoicePrefix ?? '',
     invoiceDate: '',
@@ -149,6 +152,7 @@ const InvoicePDFGenerator: React.FC<{
       const res = await addDoc(
         collection(db, 'users', userID, 'invoices'),
         invoiceData,
+
       );
       notify('Invoices Created , downloading pdf...');
       if (callback) callback(invoiceData);
@@ -157,6 +161,7 @@ const InvoicePDFGenerator: React.FC<{
   const pdfLinkRef = useRef<PDFDownloadLink | null>(null);
 
   const handleCreateAndDownload = async () => {
+
     const auth = getAuth(app);
     const userID = auth.currentUser?.uid;
 

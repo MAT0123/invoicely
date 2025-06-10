@@ -16,6 +16,7 @@ import {
   StatusType,
   InvoiceData,
 } from '../types/invoiceTypes';
+import { getToken, initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 
 export async function getSavedInvoicesFromFirestore(
   userID: string,
@@ -116,4 +117,18 @@ export async function deleteAllInvoicesFromFirestore(
       console.error('Error deleting all invoices:', error);
     }
   }
+}
+
+export const getAppCheckToken = async () => {
+  try {
+    const appCheck = initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider("6LeTMVwrAAAAAA6QRkCDbDsoku23jaD5Xg6k4gwy")
+
+    })
+    const token = await getToken(appCheck)
+    return token
+  } catch {
+    return null
+  }
+
 }

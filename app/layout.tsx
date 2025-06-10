@@ -28,6 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeTMVwrAAAAAA6QRkCDbDsoku23jaD5Xg6k4gwy"></script>
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

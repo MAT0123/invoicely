@@ -1,17 +1,21 @@
+// {
+//   "extends": [
+//     "next",
+//     "plugin:prettier/recommended"
+//   ],
+//   "rules": {
+//     "react/no-unescaped-entities": "off",
+//     "react-hooks/exhaustive-deps": "off",
+//     "jsx-a11y/alt-text": "off",
+//     "prettier/prettier": [
+//       "error",
+//       {
+//         "endOfLine": "auto"
+//       }
+//     ]
+//   }
+// }
 {
-  "extends": [
-    "next",
-    "plugin:prettier/recommended"
-  ],
-  "rules": {
-    "react/no-unescaped-entities": "off",
-    "react-hooks/exhaustive-deps": "off",
-    "jsx-a11y/alt-text": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ]
-  }
+  "extends": [],
+  "rules": {}
 }
