@@ -9,6 +9,7 @@ import { app } from './lib/firebaseConfig';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import InvoiceDashboard from './home/page';
 import AuthForms from './authentication/page';
+
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
