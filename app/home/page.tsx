@@ -89,6 +89,16 @@ const InvoiceDashboard: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   const hasInitialized = useRef(false);
   const [logo, setLogo] = useState('');
+  // useEffect(() => {
+  //   const fet = async () => {
+  //     const res = await fetch('/api/cron-jobs', {
+  //       method: "POST"
+  //     })
+  //   }
+  //   console.log("FETCHING")
+
+  //   fet()
+  // }, [])
   useEffect(() => {
     const auth = getAuth(app);
 
@@ -123,6 +133,7 @@ const InvoiceDashboard: React.FC = () => {
             JSON.parse(savedSettings),
           );
         }
+
       } else {
         router.push('/');
       }

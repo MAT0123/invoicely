@@ -13,7 +13,7 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
- 
+
   useLayoutEffect(() => {
     if (app) {
       const auth = getAuth(app);
@@ -26,7 +26,7 @@ export default function Home() {
     }
   }, [])
 
-   if (loading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <p className='text-[50px]'>Loading...</p>

@@ -231,7 +231,7 @@ export const InvoicePDF: React.FC<{ invoice: InvoiceData; image?: string }> = ({
             <Image
               src={image}
               style={{ width: 80, height: 80, marginBottom: 8 }}
-              
+
             />
           )}
           <Text style={styles.invoiceTitle}>INVOICE</Text>
