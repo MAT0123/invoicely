@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
         // userInvoicesSnapshot?.docs.map((e) => {
         //     allInvoices.push(e.data() as InvoiceData);
         // })
-        allInvoices.filter(async (e) => {
+        const emailPromise = allInvoices.map(async (e) => {
             const dueDate = new Date(e.dueDate)
             if (dueDate < today) {
                 // 2. Render to buffer (Node.js)
@@ -66,6 +66,7 @@ export async function POST(request: NextRequest) {
                 ])
             }
         })
+        const results = await Promise.allSettled(emailPromise)
         const data = { message: 'Cron job executed successfully', timestamp: new Date() };
 
         return NextResponse.json(data, { status: 200 });
