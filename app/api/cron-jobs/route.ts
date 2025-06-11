@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { generateInvoiceHTML } from './GenerateHtmlPDFTemplate';
 import puppeteer from 'puppeteer';
 export async function POST(request: NextRequest) {
-    if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+    if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_API_KEY}`) {
         return NextResponse.json("Not Authorized", { status: 400 })
     }
     // sendEmail("matthewaureliustjoa@gmail.com", "Due date passed", "Yo", [
