@@ -8,7 +8,7 @@ admin.initializeApp({
     credential: admin.credential.cert({
         projectId: process.env.FIREBASE_PROJECT_ID,
         privateKey: process.env.FIREBASE_PRIVATE_KEY,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL.replace(/\\n/g, "\n"),
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL!.replace(/\\n/g, "\n"),
     }),
     databaseURL: "invoicely-f9dec.firebasestorage.app"
 });
