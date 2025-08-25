@@ -2,7 +2,12 @@ import { sendEmail } from '@/app/lib/email';
 import { InvoiceData } from '@/app/types/invoiceTypes';
 import { NextRequest, NextResponse } from 'next/server';
 import { generateInvoiceHTML } from './GenerateHtmlPDFTemplate';
-import * as admin from "firebase-admin";
+import admin from "firebase-admin";
+import winston from 'winston'
+import WinstonCloudwatch, * as WinstonCloudWatch from 'winston-cloudwatch';
+import { CloudWatchLogs } from '@aws-sdk/client-cloudwatch-logs';
+
+
 
 admin.initializeApp({
     credential: admin.credential.cert({
@@ -12,12 +17,40 @@ admin.initializeApp({
     }),
     databaseURL: "invoicely-f9dec.firebasestorage.app"
 });
+
+const logger = winston.createLogger({
+    level: 'verbose',
+    format: winston.format.json(),
+    defaultMeta: { service: 'cron-job-service' },
+    transports: [
+        new winston.transports.Console({
+            format: winston.format.combine(
+                winston.format.colorize(),
+                winston.format.simple()
+            )
+        })
+    ],
+});
+if (process.env.NODE_ENV == 'production') {
+    logger.add(new WinstonCloudwatch({
+        awsOptions: {
+            credentials: {
+                accessKeyId: process.env.AWS_CLOUDWATCH_ACCESS || "",
+                secretAccessKey: process.env.AWS_CLOUDWATCH_SECRET || ""
+            },
+            region: process.env.AWS_REGION || "us-east-2"
+        },
+        cloudWatchLogs: new CloudWatchLogs(),
+        logGroupName: 'invoicely',
+    }))
+}
 const db = admin.firestore()
 export async function POST(request: NextRequest) {
 
     if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_API_KEY}`) {
         return NextResponse.json("Not Authorized", { status: 400 })
     }
+
     // sendEmail("matthewaureliustjoa@gmail.com", "Due date passed", "Yo", [
     //     {
     //         filename: `invoice-.pdf`,
@@ -34,6 +67,7 @@ export async function POST(request: NextRequest) {
         allExpiration.forEach(async (res) => {
             const id = res.id
             const snapshot = await db.doc(id).collection("invoices").get()
+            logger.verbose(snapshot.docs)
             snapshot.docs.forEach((invoiceDoc) => {
                 allInvoices.push({
                     ...invoiceDoc.data() as InvoiceData,
@@ -41,6 +75,7 @@ export async function POST(request: NextRequest) {
                 });
             });
         })
+
         // for (const users of allExpiration) {
         //     const userId = users.id
         //     const userInvoicesSnapshot = db.
