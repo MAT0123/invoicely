@@ -1,0 +1,510 @@
+[debug] [2025-08-25T17:15:43.551Z] ----------------------------------------------------------------------
+[debug] [2025-08-25T17:15:43.557Z] Command:       /opt/homebrew/Cellar/node/23.11.0/bin/node /opt/homebrew/bin/firebase deploy
+[debug] [2025-08-25T17:15:43.557Z] CLI Version:   14.6.0
+[debug] [2025-08-25T17:15:43.557Z] Platform:      darwin
+[debug] [2025-08-25T17:15:43.557Z] Node Version:  v23.11.0
+[debug] [2025-08-25T17:15:43.558Z] Time:          Mon Aug 25 2025 13:15:43 GMT-0400 (Eastern Daylight Time)
+[debug] [2025-08-25T17:15:43.558Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-25T17:15:43.661Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-08-25T17:15:43.661Z] > authorizing via signed-in user (matthewaureliustjoa@gmail.com)
+[debug] [2025-08-25T17:15:43.661Z] [iam] checking project invoicely-f9dec for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-08-25T17:15:43.662Z] Checked if tokens are valid: false, expires at: 1756142843179
+[debug] [2025-08-25T17:15:43.662Z] Checked if tokens are valid: false, expires at: 1756142843179
+[debug] [2025-08-25T17:15:43.662Z] > refreshing access token with scopes: []
+[debug] [2025-08-25T17:15:43.663Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-08-25T17:15:43.663Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-08-25T17:15:43.861Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-08-25T17:15:43.861Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-08-25T17:15:43.868Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions [none]
+[debug] [2025-08-25T17:15:43.868Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:15:43.868Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-08-25T17:15:44.100Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions 200
+[debug] [2025-08-25T17:15:44.100Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-08-25T17:15:44.100Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:44.100Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:44.100Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/invoicely-f9dec/serviceAccounts/invoicely-f9dec@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-08-25T17:15:44.100Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/invoicely-f9dec/serviceAccounts/invoicely-f9dec@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-08-25T17:15:44.340Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/invoicely-f9dec/serviceAccounts/invoicely-f9dec@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-08-25T17:15:44.340Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/invoicely-f9dec/serviceAccounts/invoicely-f9dec@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'invoicely-f9dec'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] ✔  functions: Finished running predeploy script. 
+[debug] [2025-08-25T17:15:47.409Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.409Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.409Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-08-25T17:15:47.409Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:15:47.725Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-08-25T17:15:47.725Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-08-25T17:15:47.726Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.726Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.726Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec [none]
+[debug] [2025-08-25T17:15:47.800Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec 200
+[debug] [2025-08-25T17:15:47.800Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec {"projectNumber":"465747096133","projectId":"invoicely-f9dec","lifecycleState":"ACTIVE","name":"invoicely","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-27T18:57:50.695392Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2025-08-25T17:15:47.801Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.801Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.801Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.801Z] Checked if tokens are valid: true, expires at: 1756145742861
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2025-08-25T17:15:47.801Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.801Z] Checked if tokens are valid: true, expires at: 1756145742861
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2025-08-25T17:15:47.801Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.801Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:47.801Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-08-25T17:15:47.801Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:15:47.802Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/runtimeconfig.googleapis.com [none]
+[debug] [2025-08-25T17:15:47.802Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:15:47.802Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudbuild.googleapis.com [none]
+[debug] [2025-08-25T17:15:47.802Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudbuild.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:15:47.803Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/artifactregistry.googleapis.com [none]
+[debug] [2025-08-25T17:15:47.803Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/artifactregistry.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:15:48.021Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudbuild.googleapis.com 200
+[debug] [2025-08-25T17:15:48.021Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2025-08-25T17:15:48.056Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudfunctions.googleapis.com 200
+[debug] [2025-08-25T17:15:48.056Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2025-08-25T17:15:48.076Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/artifactregistry.googleapis.com 200
+[debug] [2025-08-25T17:15:48.077Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2025-08-25T17:15:48.077Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/runtimeconfig.googleapis.com 200
+[debug] [2025-08-25T17:15:48.077Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2025-08-25T17:15:48.077Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:48.077Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:48.077Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/invoicely-f9dec/adminSdkConfig [none]
+[debug] [2025-08-25T17:15:48.347Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/invoicely-f9dec/adminSdkConfig 200
+[debug] [2025-08-25T17:15:48.347Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/invoicely-f9dec/adminSdkConfig {"projectId":"invoicely-f9dec","storageBucket":"invoicely-f9dec.firebasestorage.app"}
+[debug] [2025-08-25T17:15:48.348Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:48.348Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:48.348Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs [none]
+[debug] [2025-08-25T17:15:48.555Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs 200
+[debug] [2025-08-25T17:15:48.555Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs {"configs":[{"name":"projects/invoicely-f9dec/configs/cron"}]}
+[debug] [2025-08-25T17:15:48.556Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:48.556Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:48.556Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables [none]
+[debug] [2025-08-25T17:15:48.697Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables 200
+[debug] [2025-08-25T17:15:48.697Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables {"variables":[{"name":"projects/invoicely-f9dec/configs/cron/variables/secret","updateTime":"2025-06-11T17:53:01.293775833Z"}]}
+[debug] [2025-08-25T17:15:48.698Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:48.698Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:48.698Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables/secret [none]
+[debug] [2025-08-25T17:15:48.825Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables/secret 200
+[debug] [2025-08-25T17:15:48.826Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables/secret {"name":"projects/invoicely-f9dec/configs/cron/variables/secret","updateTime":"2025-06-11T17:53:01.293775833Z","text":"KBbQo7TUzisyyttVXCEV"}
+[debug] [2025-08-25T17:15:48.830Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2025-08-25T17:15:49.318Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2025-08-25T17:15:49.318Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2025-08-25T17:15:49.319Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-08-25T17:15:49.323Z] Found firebase-functions binary at '/Users/matthewtjoa/Documents/invoicely/invoicely-client/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8940
+
+[debug] [2025-08-25T17:15:49.577Z] Got response from /__/functions.yaml {"endpoints":{"manualDailyInvoiceCheck":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","secretEnvironmentVariables":[{"key":"CRON_API_KEY"}],"labels":{},"httpsTrigger":{},"entryPoint":"manualDailyInvoiceCheck"},"dailyInvoiceCheck":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","secretEnvironmentVariables":[{"key":"CRON_API_KEY"}],"labels":{},"scheduleTrigger":{"schedule":"0 9 * * *","retryConfig":{},"timeZone":"America/New_York"},"entryPoint":"dailyInvoiceCheck"}},"specVersion":"v1alpha1","requiredAPIs":[{"api":"cloudscheduler.googleapis.com","reason":"Needed for scheduled functions."}],"extensions":{},"params":[{"type":"secret","name":"CRON_API_KEY"}]}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2025-08-25T17:15:53.661Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:53.661Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:53.661Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/firebaseextensions.googleapis.com [none]
+[debug] [2025-08-25T17:15:53.661Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/firebaseextensions.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:15:53.951Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/firebaseextensions.googleapis.com 200
+[debug] [2025-08-25T17:15:53.952Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/firebaseextensions.googleapis.com [omitted]
+[info] ✔  extensions: required API firebaseextensions.googleapis.com is enabled 
+[debug] [2025-08-25T17:15:53.952Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-08-25T17:15:53.952Z] > authorizing via signed-in user (matthewaureliustjoa@gmail.com)
+[debug] [2025-08-25T17:15:53.952Z] [iam] checking project invoicely-f9dec for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2025-08-25T17:15:53.953Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:53.953Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:53.953Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions [none]
+[debug] [2025-08-25T17:15:53.953Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:15:53.953Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-08-25T17:15:54.185Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions 200
+[debug] [2025-08-25T17:15:54.185Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-08-25T17:15:54.185Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:54.185Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:54.186Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/invoicely-f9dec/instances pageSize=100&pageToken=
+[debug] [2025-08-25T17:15:54.569Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/invoicely-f9dec/instances 200
+[debug] [2025-08-25T17:15:54.569Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/invoicely-f9dec/instances {}
+[info] i  functions: Loaded environment variables from .env.invoicely-f9dec. 
+[debug] [2025-08-25T17:15:54.571Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:54.571Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:54.572Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY [none]
+[debug] [2025-08-25T17:15:54.730Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY 200
+[debug] [2025-08-25T17:15:54.730Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY {"name":"projects/465747096133/secrets/CRON_API_KEY","replication":{"automatic":{}},"createTime":"2025-06-11T18:07:15.835494Z","labels":{"firebase-managed":"functions"},"etag":"\"16374faede8a47\""}
+[debug] [2025-08-25T17:15:54.731Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:54.731Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:54.731Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY/versions/latest [none]
+[debug] [2025-08-25T17:15:54.823Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY/versions/latest 200
+[debug] [2025-08-25T17:15:54.823Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY/versions/latest {"name":"projects/465747096133/secrets/CRON_API_KEY/versions/2","createTime":"2025-06-11T18:35:14.744098Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"16375012edb722\""}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged /Users/matthewtjoa/Documents/invoicely/invoicely-client/functions (66.53 KB) for uploading 
+[debug] [2025-08-25T17:15:54.851Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:54.851Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:54.851Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/invoicely-f9dec/locations/-/functions [none]
+[debug] [2025-08-25T17:15:57.097Z] ----------------------------------------------------------------------
+[debug] [2025-08-25T17:15:57.098Z] Command:       /opt/homebrew/Cellar/node/23.11.0/bin/node /opt/homebrew/bin/firebase deploy --only functions
+[debug] [2025-08-25T17:15:57.099Z] CLI Version:   14.6.0
+[debug] [2025-08-25T17:15:57.099Z] Platform:      darwin
+[debug] [2025-08-25T17:15:57.099Z] Node Version:  v23.11.0
+[debug] [2025-08-25T17:15:57.099Z] Time:          Mon Aug 25 2025 13:15:57 GMT-0400 (Eastern Daylight Time)
+[debug] [2025-08-25T17:15:57.099Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-25T17:15:57.183Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-08-25T17:15:57.183Z] > authorizing via signed-in user (matthewaureliustjoa@gmail.com)
+[debug] [2025-08-25T17:15:57.183Z] [iam] checking project invoicely-f9dec for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-08-25T17:15:57.184Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:57.184Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:57.184Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions [none]
+[debug] [2025-08-25T17:15:57.184Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:15:57.184Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-08-25T17:15:57.433Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions 200
+[debug] [2025-08-25T17:15:57.433Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-08-25T17:15:57.433Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:57.433Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:15:57.433Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/invoicely-f9dec/serviceAccounts/invoicely-f9dec@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-08-25T17:15:57.433Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/invoicely-f9dec/serviceAccounts/invoicely-f9dec@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-08-25T17:15:57.678Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/invoicely-f9dec/serviceAccounts/invoicely-f9dec@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-08-25T17:15:57.678Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/invoicely-f9dec/serviceAccounts/invoicely-f9dec@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'invoicely-f9dec'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] ✔  functions: Finished running predeploy script. 
+[debug] [2025-08-25T17:16:00.094Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.094Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.094Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-08-25T17:16:00.094Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:16:00.379Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-08-25T17:16:00.380Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-08-25T17:16:00.380Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.380Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.380Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec [none]
+[debug] [2025-08-25T17:16:00.607Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec 200
+[debug] [2025-08-25T17:16:00.607Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec {"projectNumber":"465747096133","projectId":"invoicely-f9dec","lifecycleState":"ACTIVE","name":"invoicely","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-27T18:57:50.695392Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:00.610Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.610Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.610Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.610Z] Checked if tokens are valid: true, expires at: 1756145742861
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:00.611Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.611Z] Checked if tokens are valid: true, expires at: 1756145742861
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:00.611Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.611Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:00.612Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-08-25T17:16:00.612Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:16:00.613Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/runtimeconfig.googleapis.com [none]
+[debug] [2025-08-25T17:16:00.613Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:16:00.615Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudbuild.googleapis.com [none]
+[debug] [2025-08-25T17:16:00.615Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudbuild.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:16:00.617Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/artifactregistry.googleapis.com [none]
+[debug] [2025-08-25T17:16:00.617Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/artifactregistry.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:16:01.122Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/runtimeconfig.googleapis.com 200
+[debug] [2025-08-25T17:16:01.122Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2025-08-25T17:16:01.124Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudbuild.googleapis.com 200
+[debug] [2025-08-25T17:16:01.124Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2025-08-25T17:16:01.128Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudfunctions.googleapis.com 200
+[debug] [2025-08-25T17:16:01.128Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2025-08-25T17:16:01.129Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/artifactregistry.googleapis.com 200
+[debug] [2025-08-25T17:16:01.129Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2025-08-25T17:16:01.129Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:01.129Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:01.129Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/invoicely-f9dec/adminSdkConfig [none]
+[debug] [2025-08-25T17:16:01.398Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/invoicely-f9dec/adminSdkConfig 200
+[debug] [2025-08-25T17:16:01.398Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/invoicely-f9dec/adminSdkConfig {"projectId":"invoicely-f9dec","storageBucket":"invoicely-f9dec.firebasestorage.app"}
+[debug] [2025-08-25T17:16:01.399Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:01.399Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:01.399Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs [none]
+[debug] [2025-08-25T17:16:01.565Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs 200
+[debug] [2025-08-25T17:16:01.565Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs {"configs":[{"name":"projects/invoicely-f9dec/configs/cron"}]}
+[debug] [2025-08-25T17:16:01.566Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:01.566Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:01.566Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables [none]
+[debug] [2025-08-25T17:16:01.710Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables 200
+[debug] [2025-08-25T17:16:01.710Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables {"variables":[{"name":"projects/invoicely-f9dec/configs/cron/variables/secret","updateTime":"2025-06-11T17:53:01.293775833Z"}]}
+[debug] [2025-08-25T17:16:01.710Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:01.710Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:01.710Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables/secret [none]
+[debug] [2025-08-25T17:16:01.854Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables/secret 200
+[debug] [2025-08-25T17:16:01.855Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/invoicely-f9dec/configs/cron/variables/secret {"name":"projects/invoicely-f9dec/configs/cron/variables/secret","updateTime":"2025-06-11T17:53:01.293775833Z","text":"KBbQo7TUzisyyttVXCEV"}
+[debug] [2025-08-25T17:16:01.859Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2025-08-25T17:16:02.280Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2025-08-25T17:16:02.280Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2025-08-25T17:16:02.280Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-08-25T17:16:02.285Z] Found firebase-functions binary at '/Users/matthewtjoa/Documents/invoicely/invoicely-client/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8775
+
+[debug] [2025-08-25T17:16:02.506Z] Got response from /__/functions.yaml {"endpoints":{"manualDailyInvoiceCheck":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","secretEnvironmentVariables":[{"key":"CRON_API_KEY"}],"labels":{},"httpsTrigger":{},"entryPoint":"manualDailyInvoiceCheck"},"dailyInvoiceCheck":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","secretEnvironmentVariables":[{"key":"CRON_API_KEY"}],"labels":{},"scheduleTrigger":{"schedule":"0 9 * * *","retryConfig":{},"timeZone":"America/New_York"},"entryPoint":"dailyInvoiceCheck"}},"specVersion":"v1alpha1","requiredAPIs":[{"api":"cloudscheduler.googleapis.com","reason":"Needed for scheduled functions."}],"extensions":{},"params":[{"type":"secret","name":"CRON_API_KEY"}]}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:06.532Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:06.532Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:06.532Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/firebaseextensions.googleapis.com [none]
+[debug] [2025-08-25T17:16:06.532Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/firebaseextensions.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:16:06.795Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/firebaseextensions.googleapis.com 200
+[debug] [2025-08-25T17:16:06.795Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/firebaseextensions.googleapis.com [omitted]
+[info] ✔  extensions: required API firebaseextensions.googleapis.com is enabled 
+[debug] [2025-08-25T17:16:06.795Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-08-25T17:16:06.795Z] > authorizing via signed-in user (matthewaureliustjoa@gmail.com)
+[debug] [2025-08-25T17:16:06.795Z] [iam] checking project invoicely-f9dec for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2025-08-25T17:16:06.796Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:06.796Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:06.796Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions [none]
+[debug] [2025-08-25T17:16:06.796Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:16:06.796Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-08-25T17:16:07.034Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions 200
+[debug] [2025-08-25T17:16:07.034Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-08-25T17:16:07.035Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:07.035Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:07.036Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/invoicely-f9dec/instances pageSize=100&pageToken=
+[debug] [2025-08-25T17:16:07.317Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/invoicely-f9dec/instances 200
+[debug] [2025-08-25T17:16:07.317Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/invoicely-f9dec/instances {}
+[info] i  functions: Loaded environment variables from .env.invoicely-f9dec. 
+[debug] [2025-08-25T17:16:07.322Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:07.322Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:07.322Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY [none]
+[debug] [2025-08-25T17:16:07.467Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY 200
+[debug] [2025-08-25T17:16:07.467Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY {"name":"projects/465747096133/secrets/CRON_API_KEY","replication":{"automatic":{}},"createTime":"2025-06-11T18:07:15.835494Z","labels":{"firebase-managed":"functions"},"etag":"\"16374faede8a47\""}
+[debug] [2025-08-25T17:16:07.468Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:07.468Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:07.468Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY/versions/latest [none]
+[debug] [2025-08-25T17:16:07.533Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY/versions/latest 200
+[debug] [2025-08-25T17:16:07.534Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY/versions/latest {"name":"projects/465747096133/secrets/CRON_API_KEY/versions/2","createTime":"2025-06-11T18:35:14.744098Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"16375012edb722\""}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged /Users/matthewtjoa/Documents/invoicely/invoicely-client/functions (66.53 KB) for uploading 
+[debug] [2025-08-25T17:16:07.566Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:07.566Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:07.566Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/invoicely-f9dec/locations/-/functions [none]
+[debug] [2025-08-25T17:16:08.097Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/invoicely-f9dec/locations/-/functions 200
+[debug] [2025-08-25T17:16:08.097Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/invoicely-f9dec/locations/-/functions {}
+[debug] [2025-08-25T17:16:08.097Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:08.098Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:08.098Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2025-08-25T17:16:08.510Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/-/functions 200
+[debug] [2025-08-25T17:16:08.510Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/-/functions {"functions":[{"name":"projects/invoicely-f9dec/locations/us-central1/functions/dailyInvoiceCheck","buildConfig":{"build":"projects/465747096133/locations/us-central1/builds/c9ad709b-ae32-4349-96fe-e93dd634ccb5","runtime":"nodejs22","entryPoint":"dailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"dailyInvoiceCheck/function-source.zip","generation":"1749666921727589"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/invoicely-f9dec/locations/us-central1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"dailyInvoiceCheck/function-source.zip","generation":"1749666921727589"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/invoicely-f9dec/serviceAccounts/465747096133-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/invoicely-f9dec/locations/us-central1/services/dailyinvoicecheck","timeoutSeconds":60,"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/dailyInvoiceCheck","FUNCTION_TARGET":"dailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"maxInstanceCount":40,"ingressSettings":"ALLOW_ALL","uri":"https://dailyinvoicecheck-t6mmrwrrna-uc.a.run.app","serviceAccountEmail":"465747096133-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"secretEnvironmentVariables":[{"key":"CRON_API_KEY","projectId":"invoicely-f9dec","secret":"CRON_API_KEY","version":"2"}],"revision":"dailyinvoicecheck-00002-paq","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2025-06-11T18:37:16.699949072Z","labels":{"firebase-functions-hash":"5c3c4ab085f760b5262aedfa5262ef848ac8abe8","deployment-tool":"cli-firebase","deployment-scheduled":"true"},"environment":"GEN_2","url":"https://us-central1-invoicely-f9dec.cloudfunctions.net/dailyInvoiceCheck","createTime":"2025-06-11T18:07:41.473471240Z","satisfiesPzi":true}]}
+[info] i  functions: ensuring required API cloudscheduler.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:08.514Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:08.514Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:08.514Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/cloudscheduler.googleapis.com [none]
+[debug] [2025-08-25T17:16:08.514Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/cloudscheduler.googleapis.com x-goog-quota-user=projects/465747096133
+[debug] [2025-08-25T17:16:08.908Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/cloudscheduler.googleapis.com 200
+[debug] [2025-08-25T17:16:08.908Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/cloudscheduler.googleapis.com [omitted]
+[info] ✔  functions: required API cloudscheduler.googleapis.com is enabled 
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:08.909Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:08.909Z] Checked if tokens are valid: true, expires at: 1756145742861
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:08.909Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:08.909Z] Checked if tokens are valid: true, expires at: 1756145742861
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:08.909Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:08.909Z] Checked if tokens are valid: true, expires at: 1756145742861
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:08.910Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:08.910Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:08.910Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/run.googleapis.com [none]
+[debug] [2025-08-25T17:16:08.910Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/run.googleapis.com x-goog-quota-user=projects/465747096133
+[debug] [2025-08-25T17:16:08.910Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/eventarc.googleapis.com [none]
+[debug] [2025-08-25T17:16:08.910Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/eventarc.googleapis.com x-goog-quota-user=projects/465747096133
+[debug] [2025-08-25T17:16:08.911Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/pubsub.googleapis.com [none]
+[debug] [2025-08-25T17:16:08.912Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/pubsub.googleapis.com x-goog-quota-user=projects/465747096133
+[debug] [2025-08-25T17:16:08.913Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/storage.googleapis.com [none]
+[debug] [2025-08-25T17:16:08.913Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/storage.googleapis.com x-goog-quota-user=projects/465747096133
+[debug] [2025-08-25T17:16:09.037Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/run.googleapis.com 200
+[debug] [2025-08-25T17:16:09.037Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/run.googleapis.com [omitted]
+[info] ✔  functions: required API run.googleapis.com is enabled 
+[debug] [2025-08-25T17:16:09.170Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/eventarc.googleapis.com 200
+[debug] [2025-08-25T17:16:09.171Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/eventarc.googleapis.com [omitted]
+[info] ✔  functions: required API eventarc.googleapis.com is enabled 
+[debug] [2025-08-25T17:16:09.191Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/pubsub.googleapis.com 200
+[debug] [2025-08-25T17:16:09.191Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/pubsub.googleapis.com [omitted]
+[info] ✔  functions: required API pubsub.googleapis.com is enabled 
+[debug] [2025-08-25T17:16:09.192Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/storage.googleapis.com 200
+[debug] [2025-08-25T17:16:09.192Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/storage.googleapis.com [omitted]
+[info] ✔  functions: required API storage.googleapis.com is enabled 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2025-08-25T17:16:09.193Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:09.193Z] Checked if tokens are valid: true, expires at: 1756145742861
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2025-08-25T17:16:09.193Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:09.193Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:09.193Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/465747096133/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-08-25T17:16:09.193Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/465747096133/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-08-25T17:16:09.511Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/465747096133/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2025-08-25T17:16:09.512Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/465747096133/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-465747096133@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"102365374504116968086"}}
+[debug] [2025-08-25T17:16:09.591Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/465747096133/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2025-08-25T17:16:09.591Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/465747096133/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-465747096133@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"106053320719659350388"}}
+[info] i  functions: ensuring required API secretmanager.googleapis.com is enabled... 
+[debug] [2025-08-25T17:16:09.592Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:09.592Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:09.592Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/secretmanager.googleapis.com [none]
+[debug] [2025-08-25T17:16:09.592Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/secretmanager.googleapis.com x-goog-quota-user=projects/465747096133
+[debug] [2025-08-25T17:16:09.704Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/secretmanager.googleapis.com 200
+[debug] [2025-08-25T17:16:09.704Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/465747096133/services/secretmanager.googleapis.com [omitted]
+[info] ✔  functions: required API secretmanager.googleapis.com is enabled 
+[debug] [2025-08-25T17:16:09.707Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:09.707Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:09.707Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY/versions/latest [none]
+[debug] [2025-08-25T17:16:09.759Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY/versions/latest 200
+[debug] [2025-08-25T17:16:09.759Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/invoicely-f9dec/secrets/CRON_API_KEY/versions/latest {"name":"projects/465747096133/secrets/CRON_API_KEY/versions/2","createTime":"2025-06-11T18:35:14.744098Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"16375012edb722\""}
+[debug] [2025-08-25T17:16:09.760Z] Resolved secret version of CRON_API_KEY to 2.
+[debug] [2025-08-25T17:16:09.761Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:09.762Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:09.762Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-08-25T17:16:09.762Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:16:10.082Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-08-25T17:16:10.082Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/invoicely-f9dec/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-08-25T17:16:10.082Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.083Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.083Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec [none]
+[debug] [2025-08-25T17:16:10.182Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec 200
+[debug] [2025-08-25T17:16:10.182Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec {"projectNumber":"465747096133","projectId":"invoicely-f9dec","lifecycleState":"ACTIVE","name":"invoicely","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-27T18:57:50.695392Z"}
+[debug] [2025-08-25T17:16:10.183Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.183Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.183Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/465747096133 [none]
+[debug] [2025-08-25T17:16:10.310Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/465747096133 403
+[debug] [2025-08-25T17:16:10.310Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/465747096133 {"error":{"code":403,"message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"465747096133","service":"compute.googleapis.com","consumer":"projects/465747096133","serviceTitle":"Compute Engine API","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133"}]}]}}
+[debug] [2025-08-25T17:16:10.311Z] unable to look up default compute service account. Falling back to 465747096133-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"containerInfo":"465747096133","service":"compute.googleapis.com","consumer":"projects/465747096133","serviceTitle":"Compute Engine API","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/465747096133 had HTTP Error: 403, Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2025-08-25T17:16:10.311Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.311Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.311Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/465747096133 [none]
+[debug] [2025-08-25T17:16:10.377Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/465747096133 403
+[debug] [2025-08-25T17:16:10.377Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/465747096133 {"error":{"code":403,"message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"service":"compute.googleapis.com","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133","consumer":"projects/465747096133","containerInfo":"465747096133","serviceTitle":"Compute Engine API"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133"}]}]}}
+[debug] [2025-08-25T17:16:10.377Z] unable to look up default compute service account. Falling back to 465747096133-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"service":"compute.googleapis.com","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133","consumer":"projects/465747096133","containerInfo":"465747096133","serviceTitle":"Compute Engine API"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/465747096133 had HTTP Error: 403, Compute Engine API has not been used in project 465747096133 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=465747096133 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2025-08-25T17:16:10.379Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.379Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.379Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/invoicely-f9dec/billingInfo [none]
+[debug] [2025-08-25T17:16:10.581Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/invoicely-f9dec/billingInfo 200
+[debug] [2025-08-25T17:16:10.581Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/invoicely-f9dec/billingInfo {"name":"projects/invoicely-f9dec/billingInfo","projectId":"invoicely-f9dec","billingAccountName":"billingAccounts/01BBEA-D042FD-364247","billingEnabled":true}
+[debug] [2025-08-25T17:16:10.582Z] [functions] found 1 new HTTP functions, testing setIamPolicy permission...
+[debug] [2025-08-25T17:16:10.582Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.582Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.582Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions [none]
+[debug] [2025-08-25T17:16:10.582Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions x-goog-quota-user=projects/invoicely-f9dec
+[debug] [2025-08-25T17:16:10.582Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["cloudfunctions.functions.setIamPolicy"]}
+[debug] [2025-08-25T17:16:10.655Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions 200
+[debug] [2025-08-25T17:16:10.655Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/invoicely-f9dec:testIamPermissions {"permissions":["cloudfunctions.functions.setIamPolicy"]}
+[debug] [2025-08-25T17:16:10.655Z] [functions] found setIamPolicy permission, proceeding with deploy
+[debug] [2025-08-25T17:16:10.656Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.656Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:10.656Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/functions:generateUploadUrl [none]
+[debug] [2025-08-25T17:16:10.973Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/functions:generateUploadUrl 200
+[debug] [2025-08-25T17:16:10.973Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/gcf-v2-uploads-465747096133.us-central1.cloudfunctions.appspot.com/b1e98ed4-f176-41ae-aff1-a8b4c0ffbdb2.zip?GoogleAccessId=service-465747096133@gcf-admin-robot.iam.gserviceaccount.com&Expires=1756143976&Signature=EqM4Y%2FNCo%2BSQw0u11CESUzfkfGSooFxAgzuUkFRdIs7lg92QK%2Fitxgz3g9z6B6vTIlYwwe0YCBJxuaTLRtMtk1ROpKACdVroEtiJCZnY4sPvDBjUqOd9C4uVLPDaeMooL3jqOJoeF%2BOQLOKOurg71yZ1g5qTrwLtq4lAxNlIGlukg03sptuEi0vrKmYiv%2Fct5s3tWqYm5bedLJ%2BLFsl%2BJsW3wbFtQJP%2FGhxShePx2lrAahk5NsO8hqNs0Cs9Twskg1zuiWjhCvn46U3EMDJd3Tsq%2FQx7KetJH9P2gLFdTryWHfa7agCHtlytlVSFCMtCgPWbk7UuBaRLFhvnAStl3Q%3D%3D","storageSource":{"bucket":"gcf-v2-uploads-465747096133.us-central1.cloudfunctions.appspot.com","object":"b1e98ed4-f176-41ae-aff1-a8b4c0ffbdb2.zip"}}
+[debug] [2025-08-25T17:16:10.974Z] >>> [apiv2][query] PUT https://storage.googleapis.com/gcf-v2-uploads-465747096133.us-central1.cloudfunctions.appspot.com/b1e98ed4-f176-41ae-aff1-a8b4c0ffbdb2.zip GoogleAccessId=service-465747096133%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1756143976&Signature=EqM4Y%2FNCo%2BSQw0u11CESUzfkfGSooFxAgzuUkFRdIs7lg92QK%2Fitxgz3g9z6B6vTIlYwwe0YCBJxuaTLRtMtk1ROpKACdVroEtiJCZnY4sPvDBjUqOd9C4uVLPDaeMooL3jqOJoeF%2BOQLOKOurg71yZ1g5qTrwLtq4lAxNlIGlukg03sptuEi0vrKmYiv%2Fct5s3tWqYm5bedLJ%2BLFsl%2BJsW3wbFtQJP%2FGhxShePx2lrAahk5NsO8hqNs0Cs9Twskg1zuiWjhCvn46U3EMDJd3Tsq%2FQx7KetJH9P2gLFdTryWHfa7agCHtlytlVSFCMtCgPWbk7UuBaRLFhvnAStl3Q%3D%3D
+[debug] [2025-08-25T17:16:10.974Z] >>> [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-465747096133.us-central1.cloudfunctions.appspot.com/b1e98ed4-f176-41ae-aff1-a8b4c0ffbdb2.zip [stream]
+[debug] [2025-08-25T17:16:11.207Z] <<< [apiv2][status] PUT https://storage.googleapis.com/gcf-v2-uploads-465747096133.us-central1.cloudfunctions.appspot.com/b1e98ed4-f176-41ae-aff1-a8b4c0ffbdb2.zip 200
+[debug] [2025-08-25T17:16:11.207Z] <<< [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-465747096133.us-central1.cloudfunctions.appspot.com/b1e98ed4-f176-41ae-aff1-a8b4c0ffbdb2.zip [omitted]
+[info] ✔  functions: functions folder uploaded successfully 
+[info] i  functions: creating Node.js 22 (2nd Gen) function manualDailyInvoiceCheck(us-central1)... 
+[info] i  functions: updating Node.js 22 (2nd Gen) function dailyInvoiceCheck(us-central1)... 
+[debug] [2025-08-25T17:16:11.213Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:11.213Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:11.213Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/functions functionId=manualDailyInvoiceCheck
+[debug] [2025-08-25T17:16:11.213Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/functions {"name":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","buildConfig":{"runtime":"nodejs22","entryPoint":"manualDailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-uploads-465747096133.us-central1.cloudfunctions.appspot.com","object":"b1e98ed4-f176-41ae-aff1-a8b4c0ffbdb2.zip"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}},"serviceConfig":{"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/manualDailyInvoiceCheck","FUNCTION_TARGET":"manualDailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"secretEnvironmentVariables":[{"key":"CRON_API_KEY","secret":"CRON_API_KEY","projectId":"invoicely-f9dec","version":"2"}],"ingressSettings":null,"timeoutSeconds":null,"serviceAccountEmail":null,"availableMemory":"256Mi","minInstanceCount":null,"maxInstanceCount":null,"maxInstanceRequestConcurrency":80,"availableCpu":"1","vpcConnector":null,"vpcConnectorEgressSettings":null},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"6a92d19fabb473eddc379fcc0fae19f5c626a7fd"}}
+[debug] [2025-08-25T17:16:12.021Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/functions 200
+[debug] [2025-08-25T17:16:12.022Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/functions {"name":"projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-08-25T17:16:17.671263767Z","target":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","verb":"create","cancelRequested":false,"apiVersion":"v2"},"done":false}
+[debug] [2025-08-25T17:16:12.023Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:12.023Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:12.023Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 [none]
+[debug] [2025-08-25T17:16:12.250Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 200
+[debug] [2025-08-25T17:16:12.251Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 {"name":"projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-08-25T17:16:17.671263767Z","target":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","buildConfig":{"runtime":"nodejs22","entryPoint":"manualDailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"manualDailyInvoiceCheck/function-source.zip","generation":"1756142177389311"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/invoicely-f9dec/serviceAccounts/465747096133-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/invoicely-f9dec/locations/us-central1/services/manualdailyinvoicecheck","timeoutSeconds":60,"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/manualDailyInvoiceCheck","FUNCTION_TARGET":"manualDailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"465747096133-compute@developer.gserviceaccount.com","availableMemory":"256Mi","secretEnvironmentVariables":[{"key":"CRON_API_KEY","projectId":"invoicely-f9dec","secret":"CRON_API_KEY","version":"2"}],"maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"6a92d19fabb473eddc379fcc0fae19f5c626a7fd"},"environment":"GEN_2"},"stages":[{"name":"BUILD","state":"NOT_STARTED"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION"},"done":false}
+[debug] [2025-08-25T17:16:12.753Z] [create-default-us-central1-manualDailyInvoiceCheck] Retrying task index 0
+[debug] [2025-08-25T17:16:12.754Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:12.754Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:12.754Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 [none]
+[debug] [2025-08-25T17:16:13.004Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 200
+[debug] [2025-08-25T17:16:13.005Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 {"name":"projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-08-25T17:16:17.671263767Z","target":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","buildConfig":{"runtime":"nodejs22","entryPoint":"manualDailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"manualDailyInvoiceCheck/function-source.zip","generation":"1756142177389311"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/invoicely-f9dec/serviceAccounts/465747096133-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/invoicely-f9dec/locations/us-central1/services/manualdailyinvoicecheck","timeoutSeconds":60,"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/manualDailyInvoiceCheck","FUNCTION_TARGET":"manualDailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"465747096133-compute@developer.gserviceaccount.com","availableMemory":"256Mi","secretEnvironmentVariables":[{"key":"CRON_API_KEY","projectId":"invoicely-f9dec","secret":"CRON_API_KEY","version":"2"}],"maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"6a92d19fabb473eddc379fcc0fae19f5c626a7fd"},"environment":"GEN_2"},"stages":[{"name":"BUILD","state":"NOT_STARTED"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION"},"done":false}
+[debug] [2025-08-25T17:16:14.006Z] [create-default-us-central1-manualDailyInvoiceCheck] Retrying task index 0
+[debug] [2025-08-25T17:16:14.006Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:14.007Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:14.007Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 [none]
+[debug] [2025-08-25T17:16:14.235Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 200
+[debug] [2025-08-25T17:16:14.235Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 {"name":"projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-08-25T17:16:17.671263767Z","target":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","buildConfig":{"runtime":"nodejs22","entryPoint":"manualDailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"manualDailyInvoiceCheck/function-source.zip","generation":"1756142177389311"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/invoicely-f9dec/serviceAccounts/465747096133-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/invoicely-f9dec/locations/us-central1/services/manualdailyinvoicecheck","timeoutSeconds":60,"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/manualDailyInvoiceCheck","FUNCTION_TARGET":"manualDailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"465747096133-compute@developer.gserviceaccount.com","availableMemory":"256Mi","secretEnvironmentVariables":[{"key":"CRON_API_KEY","projectId":"invoicely-f9dec","secret":"CRON_API_KEY","version":"2"}],"maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"6a92d19fabb473eddc379fcc0fae19f5c626a7fd"},"environment":"GEN_2"},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/06264518-d0b2-4c5c-b9ea-7811608fba49?project=465747096133"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION","buildName":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49"},"done":false}
+[debug] [2025-08-25T17:16:16.237Z] [create-default-us-central1-manualDailyInvoiceCheck] Retrying task index 0
+[debug] [2025-08-25T17:16:16.237Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:16.237Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:16.238Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 [none]
+[debug] [2025-08-25T17:16:16.344Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 200
+[debug] [2025-08-25T17:16:16.345Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 {"name":"projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-08-25T17:16:17.671263767Z","target":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","buildConfig":{"runtime":"nodejs22","entryPoint":"manualDailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"manualDailyInvoiceCheck/function-source.zip","generation":"1756142177389311"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/invoicely-f9dec/serviceAccounts/465747096133-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/invoicely-f9dec/locations/us-central1/services/manualdailyinvoicecheck","timeoutSeconds":60,"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/manualDailyInvoiceCheck","FUNCTION_TARGET":"manualDailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"465747096133-compute@developer.gserviceaccount.com","availableMemory":"256Mi","secretEnvironmentVariables":[{"key":"CRON_API_KEY","projectId":"invoicely-f9dec","secret":"CRON_API_KEY","version":"2"}],"maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"6a92d19fabb473eddc379fcc0fae19f5c626a7fd"},"environment":"GEN_2"},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/06264518-d0b2-4c5c-b9ea-7811608fba49?project=465747096133"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION","buildName":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49"},"done":false}
+[debug] [2025-08-25T17:16:20.346Z] [create-default-us-central1-manualDailyInvoiceCheck] Retrying task index 0
+[debug] [2025-08-25T17:16:20.347Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:20.347Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:20.347Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 [none]
+[debug] [2025-08-25T17:16:20.564Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 200
+[debug] [2025-08-25T17:16:20.564Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 {"name":"projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-08-25T17:16:17.671263767Z","target":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","buildConfig":{"runtime":"nodejs22","entryPoint":"manualDailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"manualDailyInvoiceCheck/function-source.zip","generation":"1756142177389311"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/invoicely-f9dec/serviceAccounts/465747096133-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/invoicely-f9dec/locations/us-central1/services/manualdailyinvoicecheck","timeoutSeconds":60,"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/manualDailyInvoiceCheck","FUNCTION_TARGET":"manualDailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"465747096133-compute@developer.gserviceaccount.com","availableMemory":"256Mi","secretEnvironmentVariables":[{"key":"CRON_API_KEY","projectId":"invoicely-f9dec","secret":"CRON_API_KEY","version":"2"}],"maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"6a92d19fabb473eddc379fcc0fae19f5c626a7fd"},"environment":"GEN_2"},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/06264518-d0b2-4c5c-b9ea-7811608fba49?project=465747096133"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION","buildName":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49"},"done":false}
+[debug] [2025-08-25T17:16:28.567Z] [create-default-us-central1-manualDailyInvoiceCheck] Retrying task index 0
+[debug] [2025-08-25T17:16:28.574Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:28.574Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:28.575Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 [none]
+[debug] [2025-08-25T17:16:28.748Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 200
+[debug] [2025-08-25T17:16:28.748Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 {"name":"projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-08-25T17:16:17.671263767Z","target":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","buildConfig":{"runtime":"nodejs22","entryPoint":"manualDailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"manualDailyInvoiceCheck/function-source.zip","generation":"1756142177389311"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/invoicely-f9dec/serviceAccounts/465747096133-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/invoicely-f9dec/locations/us-central1/services/manualdailyinvoicecheck","timeoutSeconds":60,"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/manualDailyInvoiceCheck","FUNCTION_TARGET":"manualDailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"465747096133-compute@developer.gserviceaccount.com","availableMemory":"256Mi","secretEnvironmentVariables":[{"key":"CRON_API_KEY","projectId":"invoicely-f9dec","secret":"CRON_API_KEY","version":"2"}],"maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"6a92d19fabb473eddc379fcc0fae19f5c626a7fd"},"environment":"GEN_2"},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/06264518-d0b2-4c5c-b9ea-7811608fba49?project=465747096133"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION","buildName":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49"},"done":false}
+[debug] [2025-08-25T17:16:38.750Z] [create-default-us-central1-manualDailyInvoiceCheck] Retrying task index 0
+[debug] [2025-08-25T17:16:38.753Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:38.753Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:38.753Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 [none]
+[debug] [2025-08-25T17:16:39.048Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 200
+[debug] [2025-08-25T17:16:39.048Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 {"name":"projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-08-25T17:16:17.671263767Z","target":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","buildConfig":{"runtime":"nodejs22","entryPoint":"manualDailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"manualDailyInvoiceCheck/function-source.zip","generation":"1756142177389311"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/invoicely-f9dec/serviceAccounts/465747096133-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/invoicely-f9dec/locations/us-central1/services/manualdailyinvoicecheck","timeoutSeconds":60,"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/manualDailyInvoiceCheck","FUNCTION_TARGET":"manualDailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"465747096133-compute@developer.gserviceaccount.com","availableMemory":"256Mi","secretEnvironmentVariables":[{"key":"CRON_API_KEY","projectId":"invoicely-f9dec","secret":"CRON_API_KEY","version":"2"}],"maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"6a92d19fabb473eddc379fcc0fae19f5c626a7fd"},"environment":"GEN_2"},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/06264518-d0b2-4c5c-b9ea-7811608fba49?project=465747096133"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION","buildName":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49"},"done":false}
+[debug] [2025-08-25T17:16:49.051Z] [create-default-us-central1-manualDailyInvoiceCheck] Retrying task index 0
+[debug] [2025-08-25T17:16:49.055Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:49.055Z] Checked if tokens are valid: true, expires at: 1756145742861
+[debug] [2025-08-25T17:16:49.056Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 [none]
+[debug] [2025-08-25T17:16:49.360Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 200
+[debug] [2025-08-25T17:16:49.360Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428 {"name":"projects/invoicely-f9dec/locations/us-central1/operations/operation-1756142177107-63d33b6a43fd8-5719de0a-b1533428","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2025-08-25T17:16:17.671263767Z","target":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","verb":"create","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/invoicely-f9dec/locations/us-central1/functions/manualDailyInvoiceCheck","buildConfig":{"runtime":"nodejs22","entryPoint":"manualDailyInvoiceCheck","source":{"storageSource":{"bucket":"gcf-v2-sources-465747096133-us-central1","object":"manualDailyInvoiceCheck/function-source.zip","generation":"1756142177389311"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"serviceAccount":"projects/invoicely-f9dec/serviceAccounts/465747096133-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/invoicely-f9dec/locations/us-central1/services/manualdailyinvoicecheck","timeoutSeconds":60,"environmentVariables":{"CRON_SECRET":"UzxWW4HJUpL13o9K9dFn","FIREBASE_CONFIG":"{\"projectId\":\"invoicely-f9dec\",\"storageBucket\":\"invoicely-f9dec.firebasestorage.app\"}","GCLOUD_PROJECT":"invoicely-f9dec","EVENTARC_CLOUD_EVENT_SOURCE":"projects/invoicely-f9dec/locations/us-central1/services/manualDailyInvoiceCheck","FUNCTION_TARGET":"manualDailyInvoiceCheck","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","serviceAccountEmail":"465747096133-compute@developer.gserviceaccount.com","availableMemory":"256Mi","secretEnvironmentVariables":[{"key":"CRON_API_KEY","projectId":"invoicely-f9dec","secret":"CRON_API_KEY","version":"2"}],"maxInstanceRequestConcurrency":80,"availableCpu":"1"},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"6a92d19fabb473eddc379fcc0fae19f5c626a7fd"},"environment":"GEN_2"},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=us-central1/06264518-d0b2-4c5c-b9ea-7811608fba49?project=465747096133"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"CREATE_FUNCTION","buildName":"projects/465747096133/locations/us-central1/builds/06264518-d0b2-4c5c-b9ea-7811608fba49"},"done":false}

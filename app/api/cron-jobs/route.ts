@@ -4,8 +4,19 @@ import { InvoiceData } from '@/app/types/invoiceTypes';
 import { collection, getDocs } from 'firebase/firestore';
 import { NextRequest, NextResponse } from 'next/server';
 import { generateInvoiceHTML } from './GenerateHtmlPDFTemplate';
-import puppeteer from 'puppeteer';
+import * as admin from "firebase-admin";
+import { initializeApp } from "firebase-admin/app";
+
+const app = initializeApp({
+    credential: admin.credential.cert({
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    })
+});
+
 export async function POST(request: NextRequest) {
+
     if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_API_KEY}`) {
         return NextResponse.json("Not Authorized", { status: 400 })
     }
@@ -42,25 +53,26 @@ export async function POST(request: NextRequest) {
         const emailPromise = allInvoices.map(async (e) => {
             const dueDate = new Date(e.dueDate)
             if (dueDate < today) {
-                // 2. Render to buffer (Node.js)
+
                 const htmlPDF = generateInvoiceHTML(e)
-                const browser = await puppeteer.launch({
-                    headless: true,
-                    args: ['--no-sandbox', '--disable-setuid-sandbox']
-                });
-                const page = await browser.newPage();
-                await page.setContent(htmlPDF, { waitUntil: 'networkidle0' });
-                const pdfBuffer = await page.pdf({
-                    format: 'A4',
-                    printBackground: true,
-                    margin: { top: '20px', right: '20px', bottom: '20px', left: '20px' }
-                });
-                await browser.close();
+                // const browser = await puppeteer.launch({
+                //     headless: true,
+                //     args: ['--no-sandbox', '--disable-setuid-sandbox']
+                // });
+                // const page = await browser.newPage();
+                // await page.setContent(htmlPDF, { waitUntil: 'networkidle0' });
+                // const pdfBuffer = await page.pdf({
+                //     format: 'A4',
+                //     printBackground: true,
+                //     margin: { top: '20px', right: '20px', bottom: '20px', left: '20px' }
+                // });
+                // await browser.close();
 
                 sendEmail(e.clientEmail, "Due date passed", `Invoice number ${e.invoiceNumber} has not been paid yet`, [
                     {
                         filename: `invoice-${e.invoiceNumber}.pdf`,
-                        content: Buffer.from(pdfBuffer),
+                        // content: Buffer.from(pdfBuffer),
+                        content: "",
                         contentType: 'application/pdf'
                     }
                 ])
@@ -79,5 +91,9 @@ export async function POST(request: NextRequest) {
     }
 }
 
-
+export async function GET() {
+    return NextResponse.json({
+        error: 'Method not allowed. Use POST.'
+    }, { status: 405 });
+}
 

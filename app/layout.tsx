@@ -5,6 +5,7 @@ import './globals.css';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { createContext, useEffect } from 'react';
 import { app } from './lib/firebaseConfig';
+import Script from 'next/script';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,15 +27,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
-      <script src="https://www.google.com/recaptcha/enterprise.js?render=6LeTMVwrAAAAAA6QRkCDbDsoku23jaD5Xg6k4gwy"></script>
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>
+
+      <Script src="https://www.google.com/recaptcha/enterprise.js?render=6LeTMVwrAAAAAA6QRkCDbDsoku23jaD5Xg6k4gwy"></Script>
+
     </html>
   );
 }

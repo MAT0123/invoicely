@@ -13,6 +13,7 @@ import {
 } from 'firebase/auth'; // Adjust the import path as necessary
 import { useRouter } from 'next/navigation';
 import { app, auth } from '../lib/firebaseConfig';
+import Link from 'next/link';
 interface SignUpFormData {
   firstName: string;
   lastName: string;
@@ -203,22 +204,20 @@ const AuthForms: React.FC = () => {
             <button
               type="button"
               onClick={() => !isSignUp && toggleForm()}
-              className={`py-2 px-4 rounded-md font-bold text-sm transition-all duration-200 ${
-                isSignUp
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-transparent text-black hover:bg-gray-200'
-              }`}
+              className={`py-2 px-4 rounded-md font-bold text-sm transition-all duration-200 ${isSignUp
+                ? 'bg-blue-600 text-white shadow-lg'
+                : 'bg-transparent text-black hover:bg-gray-200'
+                }`}
             >
               Sign Up
             </button>
             <button
               type="button"
               onClick={() => isSignUp && toggleForm()}
-              className={`py-2 px-4 rounded-md font-bold text-sm transition-all duration-200 ${
-                !isSignUp
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-transparent text-black hover:bg-gray-200'
-              }`}
+              className={`py-2 px-4 rounded-md font-bold text-sm transition-all duration-200 ${!isSignUp
+                ? 'bg-blue-600 text-white shadow-lg'
+                : 'bg-transparent text-black hover:bg-gray-200'
+                }`}
             >
               Sign In
             </button>
@@ -242,11 +241,10 @@ const AuthForms: React.FC = () => {
                     onChange={(e) =>
                       handleSignUpChange('firstName', e.target.value)
                     }
-                    className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                      signUpErrors.firstName
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                        : 'border-gray-400 focus:border-blue-600'
-                    }`}
+                    className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${signUpErrors.firstName
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                      : 'border-gray-400 focus:border-blue-600'
+                      }`}
                     placeholder="First name"
                   />
                   {signUpErrors.firstName && (
@@ -266,11 +264,10 @@ const AuthForms: React.FC = () => {
                     onChange={(e) =>
                       handleSignUpChange('lastName', e.target.value)
                     }
-                    className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                      signUpErrors.lastName
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                        : 'border-gray-400 focus:border-blue-600'
-                    }`}
+                    className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${signUpErrors.lastName
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                      : 'border-gray-400 focus:border-blue-600'
+                      }`}
                     placeholder="Last name"
                   />
                   {signUpErrors.lastName && (
@@ -290,11 +287,10 @@ const AuthForms: React.FC = () => {
                   type="email"
                   value={signUpData.email}
                   onChange={(e) => handleSignUpChange('email', e.target.value)}
-                  className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                    signUpErrors.email
-                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                      : 'border-gray-400 focus:border-blue-600'
-                  }`}
+                  className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${signUpErrors.email
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                    : 'border-gray-400 focus:border-blue-600'
+                    }`}
                   placeholder="Enter your email"
                 />
                 {signUpErrors.email && (
@@ -316,11 +312,10 @@ const AuthForms: React.FC = () => {
                     onChange={(e) =>
                       handleSignUpChange('password', e.target.value)
                     }
-                    className={`w-full px-4 py-3 pr-12 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                      signUpErrors.password
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                        : 'border-gray-400 focus:border-blue-600'
-                    }`}
+                    className={`w-full px-4 py-3 pr-12 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${signUpErrors.password
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                      : 'border-gray-400 focus:border-blue-600'
+                      }`}
                     placeholder="Create password"
                   />
                   <button
@@ -384,11 +379,10 @@ const AuthForms: React.FC = () => {
                     onChange={(e) =>
                       handleSignUpChange('confirmPassword', e.target.value)
                     }
-                    className={`w-full px-4 py-3 pr-12 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                      signUpErrors.confirmPassword
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                        : 'border-gray-400 focus:border-blue-600'
-                    }`}
+                    className={`w-full px-4 py-3 pr-12 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${signUpErrors.confirmPassword
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                      : 'border-gray-400 focus:border-blue-600'
+                      }`}
                     placeholder="Confirm password"
                   />
                   <button
@@ -495,11 +489,10 @@ const AuthForms: React.FC = () => {
                   type="email"
                   value={signInData.email}
                   onChange={(e) => handleSignInChange('email', e.target.value)}
-                  className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                    signInErrors.email
-                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                      : 'border-gray-400 focus:border-blue-600'
-                  }`}
+                  className={`w-full px-4 py-3 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${signInErrors.email
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                    : 'border-gray-400 focus:border-blue-600'
+                    }`}
                   placeholder="Enter your email"
                 />
                 {signInErrors.email && (
@@ -521,11 +514,10 @@ const AuthForms: React.FC = () => {
                     onChange={(e) =>
                       handleSignInChange('password', e.target.value)
                     }
-                    className={`w-full px-4 py-3 pr-12 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${
-                      signInErrors.password
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                        : 'border-gray-400 focus:border-blue-600'
-                    }`}
+                    className={`w-full px-4 py-3 pr-12 border-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-200 text-black font-medium ${signInErrors.password
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                      : 'border-gray-400 focus:border-blue-600'
+                      }`}
                     placeholder="Enter your password"
                   />
                   <button
@@ -592,12 +584,12 @@ const AuthForms: React.FC = () => {
                     Remember me
                   </span>
                 </label>
-                <a
-                  href="#"
+                <Link
+                  href="/authentication/forgot-password"
                   className="text-sm text-blue-600 font-bold hover:text-blue-800 underline"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               {/* Submit Button */}
