@@ -1,20 +1,18 @@
 import { sendEmail } from '@/app/lib/email';
-import { db } from '@/app/lib/firebaseConfig';
 import { InvoiceData } from '@/app/types/invoiceTypes';
 import { collection, getDocs } from 'firebase/firestore';
 import { NextRequest, NextResponse } from 'next/server';
 import { generateInvoiceHTML } from './GenerateHtmlPDFTemplate';
 import * as admin from "firebase-admin";
-import { initializeApp } from "firebase-admin/app";
 
-const app = initializeApp({
+admin.initializeApp({
     credential: admin.credential.cert({
         projectId: process.env.FIREBASE_PROJECT_ID,
         privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
         clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
     })
 });
-
+const db = admin.firestore()
 export async function POST(request: NextRequest) {
 
     if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_API_KEY}`) {
@@ -30,23 +28,31 @@ export async function POST(request: NextRequest) {
 
     try {
         const today = new Date()
-        const allExpiration = await getDocs(collection(db, 'users'))
+        // const allExpiration = await getDocs(collection(db, 'users'))
+        const allExpiration = await db.collection("users").get()
         let allInvoices: Array<InvoiceData & { userId: string }> = [];
-
-        for (const users of allExpiration.docs) {
-            const userId = users.id
-            const userInvoicesSnapshot = await getDocs(
-                collection(db, 'users', userId, 'invoices')
-            );
-
-            userInvoicesSnapshot.docs.forEach((invoiceDoc) => {
+        allExpiration.forEach(async (res) => {
+            const id = res.id
+            const snapshot = await db.doc(id).collection("invoices").get()
+            snapshot.docs.forEach((invoiceDoc) => {
                 allInvoices.push({
                     ...invoiceDoc.data() as InvoiceData,
-                    userId: userId // Track which user this invoice belongs to
+                    userId: id
                 });
             });
+        })
+        // for (const users of allExpiration) {
+        //     const userId = users.id
+        //     const userInvoicesSnapshot = db.
 
-        }
+        //     userInvoicesSnapshot.docs.forEach((invoiceDoc) => {
+        //         allInvoices.push({
+        //             ...invoiceDoc.data() as InvoiceData,
+        //             userId: userId // Track which user this invoice belongs to
+        //         });
+        //     });
+
+        // }
         // userInvoicesSnapshot?.docs.map((e) => {
         //     allInvoices.push(e.data() as InvoiceData);
         // })
@@ -68,7 +74,7 @@ export async function POST(request: NextRequest) {
                 // });
                 // await browser.close();
 
-                sendEmail(e.clientEmail, "Due date passed", `Invoice number ${e.invoiceNumber} has not been paid yet`, [
+                await sendEmail(e.clientEmail, "Due date passed", `Invoice number ${e.invoiceNumber} has not been paid yet`, [
                     {
                         filename: `invoice-${e.invoiceNumber}.pdf`,
                         // content: Buffer.from(pdfBuffer),
