@@ -5,12 +5,11 @@ import { generateInvoiceHTML } from './GenerateHtmlPDFTemplate';
 import * as admin from "firebase-admin";
 
 admin.initializeApp({
-    // credential: admin.credential.cert({
-    //     projectId: process.env.FIREBASE_PROJECT_ID,
-    //     privateKey: process.env.FIREBASE_PRIVATE_KEY,
-    //     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    // }),
-    credential: admin.credential.applicationDefault(),
+    credential: admin.credential.cert({
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL.replace(/\\n/g, "\n"),
+    }),
     databaseURL: "invoicely-f9dec.firebasestorage.app"
 });
 const db = admin.firestore()
