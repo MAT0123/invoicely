@@ -1,19 +1,20 @@
 import { sendEmail } from '@/app/lib/email';
 import { InvoiceData } from '@/app/types/invoiceTypes';
 import { NextRequest, NextResponse } from 'next/server';
-import { generateInvoiceHTML } from './GenerateHtmlPDFTemplate';
 import admin from "firebase-admin";
 import winston from 'winston'
 import WinstonCloudwatch, * as WinstonCloudWatch from 'winston-cloudwatch';
 import { CloudWatchLogs } from '@aws-sdk/client-cloudwatch-logs';
-
+import { renderToBuffer, renderToFile } from '@react-pdf/renderer';
+import { InvoicePDF } from '@/app/components/InvoiceTemplate';
+import React from 'react';
 
 
 admin.initializeApp({
     credential: admin.credential.cert({
         projectId: process.env.FIREBASE_PROJECT_ID,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL!.replace(/\\n/g, "\n"),
+        privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
     }),
     databaseURL: "invoicely-f9dec.firebasestorage.app"
 });
@@ -31,6 +32,7 @@ const logger = winston.createLogger({
         })
     ],
 });
+
 if (process.env.NODE_ENV == 'production') {
     logger.add(new WinstonCloudwatch({
         awsOptions: {
@@ -45,6 +47,9 @@ if (process.env.NODE_ENV == 'production') {
     }))
 }
 const db = admin.firestore()
+
+export type InvoiceDataPlusUserId = InvoiceData & { userId: string }
+
 export async function POST(request: NextRequest) {
 
     if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_API_KEY}`) {
@@ -63,19 +68,31 @@ export async function POST(request: NextRequest) {
         const today = new Date()
         // const allExpiration = await getDocs(collection(db, 'users'))
         const allExpiration = await db.collection("users").get()
-        let allInvoices: Array<InvoiceData & { userId: string }> = [];
-        allExpiration.forEach(async (res) => {
-            const id = res.id
+        let allInvoices: Array<InvoiceDataPlusUserId> = [];
+        // allExpiration.forEach(async (res) => {
+        //     const id = res.id
+        //     const snapshot = await db.doc(id).collection("invoices").get()
+        //     snapshot.docs.forEach((invoiceDoc) => {
+        //         logger.verbose(invoiceDoc.data())
+
+        //         allInvoices.push({
+        //             ...invoiceDoc.data() as InvoiceData,
+        //             userId: id
+        //         });
+        //     });
+        // })
+        for (const invoices of allExpiration.docs) {
+            const id = invoices.id
             const snapshot = await db.doc(id).collection("invoices").get()
-            logger.verbose(snapshot.docs)
             snapshot.docs.forEach((invoiceDoc) => {
+                logger.verbose(invoiceDoc.data())
+
                 allInvoices.push({
                     ...invoiceDoc.data() as InvoiceData,
                     userId: id
                 });
             });
-        })
-
+        }
         // for (const users of allExpiration) {
         //     const userId = users.id
         //     const userInvoicesSnapshot = db.
@@ -92,10 +109,11 @@ export async function POST(request: NextRequest) {
         //     allInvoices.push(e.data() as InvoiceData);
         // })
         const emailPromise = allInvoices.map(async (e) => {
+            const status = e.status
             const dueDate = new Date(e.dueDate)
-            if (dueDate < today) {
+            if (dueDate < today && status == "sent") {
 
-                const htmlPDF = generateInvoiceHTML(e)
+                //const htmlPDF = generateInvoiceHTML(e)
                 // const browser = await puppeteer.launch({
                 //     headless: true,
                 //     args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -104,16 +122,22 @@ export async function POST(request: NextRequest) {
                 // await page.setContent(htmlPDF, { waitUntil: 'networkidle0' });
                 // const pdfBuffer = await page.pdf({
                 //     format: 'A4',
-                //     printBackground: true,
+                //     printBackground: true,`
                 //     margin: { top: '20px', right: '20px', bottom: '20px', left: '20px' }
                 // });
                 // await browser.close();
+                const { userId, ...invoidPdf } = e;
 
+
+                const pdf = await renderToBuffer(<InvoicePDF invoice={invoidPdf} />)
+                await db.doc(e.userId).collection("invoices").doc(e.invoiceNumber).update({
+                    status: "overdue"
+                });
                 await sendEmail(e.clientEmail, "Due date passed", `Invoice number ${e.invoiceNumber} has not been paid yet`, [
                     {
                         filename: `invoice-${e.invoiceNumber}.pdf`,
                         // content: Buffer.from(pdfBuffer),
-                        content: "",
+                        content: Buffer.from(pdf),
                         contentType: 'application/pdf'
                     }
                 ])

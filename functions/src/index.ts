@@ -11,7 +11,7 @@ const check = async () => {
     console.log("Daily invoice check started at:", new Date());
 
     try {
-        const response = await fetch('http://127.0.0.1:3000/api/cron-jobs', {
+        const response = await fetch('http://invoicely.matthewautjoa.tech/api/cron-jobs', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

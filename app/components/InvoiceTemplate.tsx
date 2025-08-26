@@ -5,9 +5,6 @@ import {
   Text,
   View,
   StyleSheet,
-  PDFDownloadLink,
-  Font,
-  pdf,
   Image,
 } from '@react-pdf/renderer';
 
@@ -209,6 +206,8 @@ const styles = StyleSheet.create({
     color: '#666666',
   },
 });
+
+
 export const InvoicePDF: React.FC<{ invoice: InvoiceData; image?: string }> = ({
   invoice,
   image,
