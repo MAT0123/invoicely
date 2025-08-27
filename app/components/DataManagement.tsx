@@ -17,6 +17,7 @@ export default function DataManagement({
   deleteAllInvoice: () => void;
 }) {
   const router = useRouter()
+  const isPasskey = document.cookie.includes("passkey")
   return (
     <div className="pt-6 border-t-2 border-gray-300">
       <h3 className="text-lg font-bold text-black mb-4">Data Management</h3>
@@ -107,8 +108,22 @@ export default function DataManagement({
           >
             Log Out
           </button>
+          {
+            isPasskey &&
+            (
+              <button
+                onClick={async () => {
+
+                }}
+                className="col-span-1 md:col-span-3 px-4 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors border-2 border-red-700 w-full "
+              >
+                Associate Passkey
+              </button>
+            )
+          }
+
         </div>
       </div>
-    </div>
+    </div >
   );
 }
