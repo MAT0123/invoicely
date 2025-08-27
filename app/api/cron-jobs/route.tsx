@@ -4,20 +4,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import admin from "firebase-admin";
 import winston from 'winston'
 import WinstonCloudwatch, * as WinstonCloudWatch from 'winston-cloudwatch';
-import { CloudWatchLogs } from '@aws-sdk/client-cloudwatch-logs';
 import { renderToBuffer, renderToFile } from '@react-pdf/renderer';
 import { InvoicePDF } from '@/app/components/InvoiceTemplate';
 import React from 'react';
+import { randomUUID } from 'crypto';
 
+if (admin.apps.length === 0) {
+    admin.initializeApp({
+        credential: admin.credential.cert({
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
+        }),
+        databaseURL: "invoicely-f9dec.firebasestorage.app"
+    });
+}
 
-admin.initializeApp({
-    credential: admin.credential.cert({
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
-    }),
-    databaseURL: "invoicely-f9dec.firebasestorage.app"
-});
 
 const logger = winston.createLogger({
     level: 'verbose',
@@ -33,19 +35,20 @@ const logger = winston.createLogger({
     ],
 });
 
-if (process.env.NODE_ENV == 'production') {
-    logger.add(new WinstonCloudwatch({
-        awsOptions: {
-            credentials: {
-                accessKeyId: process.env.AWS_CLOUDWATCH_ACCESS || "",
-                secretAccessKey: process.env.AWS_CLOUDWATCH_SECRET || ""
-            },
-            region: process.env.AWS_REGION || "us-east-2"
+//if (process.env.NODE_ENV == 'production') {
+logger.add(new WinstonCloudwatch({
+    awsOptions: {
+        credentials: {
+            accessKeyId: process.env.AWS_CLOUDWATCH_ACCESS || "",
+            secretAccessKey: process.env.AWS_CLOUDWATCH_SECRET || ""
         },
-        cloudWatchLogs: new CloudWatchLogs(),
-        logGroupName: 'invoicely',
-    }))
-}
+        region: process.env.AWS_REGION || "us-east-2"
+    },
+    logGroupName: 'invoicely',
+    logStreamName: randomUUID(),
+    level: 'verbose'
+}))
+//}
 const db = admin.firestore()
 
 export type InvoiceDataPlusUserId = InvoiceData & { userId: string }
@@ -53,6 +56,8 @@ export type InvoiceDataPlusUserId = InvoiceData & { userId: string }
 export async function POST(request: NextRequest) {
 
     if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_API_KEY}`) {
+        logger.verbose("Unauthorized attempt ")
+
         return NextResponse.json("Not Authorized", { status: 400 })
     }
 

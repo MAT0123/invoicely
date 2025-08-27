@@ -18,6 +18,15 @@ import {
 } from '../types/invoiceTypes';
 import { getToken, initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 
+export async function checkIfCollectionExist(path: string, ...collectionPath: string[]) {
+  try {
+    const userDocRef = collection(db, path, ...collectionPath)
+    const exist = await getDocs(userDocRef)
+    return !exist.empty
+  } catch (e) {
+    console.log(e)
+  }
+}
 export async function getSavedInvoicesFromFirestore(
   userID: string,
 ): Promise<DocumentData | null> {
@@ -132,3 +141,4 @@ export const getAppCheckToken = async () => {
   }
 
 }
+

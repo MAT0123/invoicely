@@ -2,6 +2,7 @@ import React from 'react';
 import { CompanySettings, Invoice } from '../types/invoiceTypes';
 import { signOut } from 'firebase/auth';
 import { auth } from '../lib/firebaseConfig';
+import { useRouter } from 'next/navigation';
 export default function DataManagement({
   invoices,
   settings,
@@ -15,6 +16,7 @@ export default function DataManagement({
   setSettings: (settings: CompanySettings) => void;
   deleteAllInvoice: () => void;
 }) {
+  const router = useRouter()
   return (
     <div className="pt-6 border-t-2 border-gray-300">
       <h3 className="text-lg font-bold text-black mb-4">Data Management</h3>
@@ -88,6 +90,17 @@ export default function DataManagement({
 
           <button
             onClick={async () => {
+              const passkeyCookiesAvailable = document.cookie.includes('passkey')
+              const passkeyCookie = document.cookie[document.cookie.indexOf("passkey")]
+              if (passkeyCookiesAvailable) {
+                const r = await fetch("/api/logout", {
+                  method: "POST",
+                  credentials: "include"
+                })
+                router.replace("/")
+                console.log(await r.json())
+                return
+              }
               await signOut(auth);
             }}
             className="col-span-1 md:col-span-3 px-4 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors border-2 border-red-700 w-full "

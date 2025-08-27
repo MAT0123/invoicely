@@ -12,8 +12,13 @@ import {
   signInWithPopup,
 } from 'firebase/auth'; // Adjust the import path as necessary
 import { useRouter } from 'next/navigation';
-import { app, auth } from '../lib/firebaseConfig';
+import { app, auth, db } from '../lib/firebaseConfig';
 import Link from 'next/link';
+import { v4 } from 'uuid'
+import { b64encode, prepLoginsOptions, prepRegistrationOptions } from '../lib/passkeyHelper';
+import { PublicKeyOptions, WebAuthnOptions } from '../types/passkeyTypes';
+import { startAuthentication, PublicKeyCredentialHint, startRegistration, WebAuthnError } from '@simplewebauthn/browser'
+import { PublicKeyCredentialDescriptorJSON } from '@simplewebauthn/types'
 interface SignUpFormData {
   firstName: string;
   lastName: string;
@@ -114,6 +119,106 @@ const AuthForms: React.FC = () => {
       setSignInErrors((prev) => ({ ...prev, [field]: '' }));
     }
   };
+  const handlePasskeyLogin = async () => {
+    // if (prevCred == null) {
+    try {
+      const abortController = new AbortController()
+      const username = v4()
+      // const timeout = setTimeout(() => { abortController.abort() }, 10000)
+      let usernamelessOptions = await fetch('/api/login/start', {
+        method: "POST",
+        signal: abortController.signal,
+      })
+      const json = await usernamelessOptions.json()
+      const option = json.options as PublicKeyCredentialRequestOptionsJSON
+      const sessionId = json.sessionId as string
+
+      try {
+        const attes = await startAuthentication({
+          optionsJSON: {
+            ...option,
+            allowCredentials: option.allowCredentials as PublicKeyCredentialDescriptorJSON[] | undefined,
+            challenge: option.challenge,
+            extensions: option.extensions,
+            userVerification: option.userVerification as UserVerificationRequirement | undefined,
+            hints: option.hints as PublicKeyCredentialHint[] | undefined,
+          },
+          useBrowserAutofill: false
+        })
+
+        if (!attes) return
+        const sendRes = await fetch('/api/login/finish', {
+          method: "POST",
+          headers: {
+            username: sessionId,
+            "content-type": "application/json"
+          },
+          body: JSON.stringify({
+            attes
+          })
+        })
+        if (sendRes.status == 200) {
+          router.replace("/home")
+        }
+      } catch (e) {
+        if (e instanceof WebAuthnError) {
+          if (e.code == "ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY") {
+            return
+          }
+        }
+        let options = await fetch('/api/register/start', {
+          method: "POST",
+          signal: abortController.signal,
+          headers: {
+            username
+          }
+        })
+        const json: any = await options.json()
+        const pubKey = json.pubKey as PublicKeyCredentialCreationOptionsJSON
+        console.log(`client_register: pubKey${pubKey}`)
+
+        console.log(pubKey)
+        if (!pubKey || !pubKey.challenge) {
+          throw new Error('Missing challenge in server response');
+        }
+
+        let asseResp;
+
+        asseResp = await startRegistration({
+          optionsJSON: {
+            ...pubKey,
+            attestation: pubKey.attestation as AttestationConveyancePreference | undefined,
+            hints: pubKey.hints as PublicKeyCredentialHint[] | undefined,
+            excludeCredentials: Array.isArray(pubKey.excludeCredentials)
+              ? pubKey.excludeCredentials.map((ec) => ({
+                type: "public-key",
+                id: ec.id,
+                transports: ec.transports as string[] | undefined,
+              })) as PublicKeyCredentialDescriptorJSON[]
+              : undefined
+          }
+        });
+
+        console.log(`asseResp${JSON.stringify(asseResp)}`)
+        const sendRes = await fetch('/api/register/finish', {
+          method: "POST",
+          headers: {
+            username,
+            "content-type": "application/json"
+          },
+          body: JSON.stringify(asseResp)
+        })
+        if (sendRes.status == 200) {
+          router.replace("/home")
+        }
+      }
+    }
+    catch (error) {
+      if (error instanceof Error) {
+        console.log(error)
+      }
+    }
+  }
 
   const validateSignIn = (): boolean => {
     const errors: Partial<SignInFormData> = {};
@@ -147,6 +252,7 @@ const AuthForms: React.FC = () => {
         updateProfile(user, {
           displayName: `${signUpData.firstName}.${signUpData.lastName}`,
         });
+
         console.log(res);
 
         router.push('/home');
@@ -647,7 +753,16 @@ const AuthForms: React.FC = () => {
               </svg>
               Google
             </button>
-
+            <button
+              type="button"
+              onClick={handlePasskeyLogin}
+              className="w-full inline-flex justify-center py-3 px-4 border-2 border-gray-400 rounded-lg shadow-sm bg-white text-sm font-bold text-black hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+            >
+              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM18 10a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+              </svg>
+              Continue with Passkey
+            </button>
             {/* <button
               type="button"
               className="w-full inline-flex justify-center py-3 px-4 border-2 border-gray-400 rounded-lg shadow-sm bg-white text-sm font-bold text-black hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"

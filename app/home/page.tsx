@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import InvoicePDFGenerator from '../components/InvoiceGenerator';
 import {
   collection,
@@ -29,7 +29,7 @@ import Dashboard from '../components/Dashboard';
 import DataManagement from '../components/DataManagement';
 import Settings from '../components/Settings';
 import { useInvoice } from '../hooks/useInvoice';
-import { getLogoFromFirestore } from '../lib/firebaseService';
+import { checkIfCollectionExist, getLogoFromFirestore } from '../lib/firebaseService';
 
 const InvoiceDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
@@ -67,6 +67,7 @@ const InvoiceDashboard: React.FC = () => {
     total: 0,
     notes: '',
   });
+
   async function getSavedInvoicesFromFirestore(
     userID: string,
   ): Promise<DocumentData | null> {
@@ -100,12 +101,23 @@ const InvoiceDashboard: React.FC = () => {
   //   fet()
   // }, [])
   useEffect(() => {
-    const auth = getAuth(app);
+    const asyncWrapper = async () => {
 
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const userID = user.uid;
+      const passkeyCookiesAvailable = document.cookie.includes('passkey')
+      const passkeyCookie = document.cookie[document.cookie.indexOf("passkey")]
+      if (!passkeyCookiesAvailable) {
+        router.replace('/')
+        // const passkeyCookies = (await cookies()).get("passkey")
+        // if (passkeyCookies == undefined) {
+        //   router.push('/')
+        // }
+      }
+      const auth = getAuth(app);
+      const user = auth.currentUser
+      const userID = user?.uid ?? passkeyCookie;
+      const exist = await checkIfCollectionExist("users", userID, "invoices")
 
+      if (exist) {
         const data = (await getSavedInvoicesFromFirestore(
           userID,
         )) as InvoicesWithFirestoreID[];
@@ -113,34 +125,33 @@ const InvoiceDashboard: React.FC = () => {
           convertInvoiceDataToInvoice(invoice.data, invoice.id),
         );
         setInvoices(convertedData);
-
-        const savedSettings = localStorage.getItem('companySettings');
-        const savedLogo = localStorage.getItem('logo');
-
-        if (savedLogo) {
-          setLogo(savedLogo);
-        } else {
-          const res = await getLogoFromFirestore();
-          if (res != '') {
-            setLogo(res);
-          }
-        }
-
-        if (savedSettings) {
-          setSettings(JSON.parse(savedSettings));
-          console.log(
-            'Loaded settings from localStorage:',
-            JSON.parse(savedSettings),
-          );
-        }
-
-      } else {
-        router.push('/');
       }
-      hasInitialized.current = true;
-    });
 
-    return () => unsubscribe();
+
+      const savedSettings = localStorage.getItem('companySettings');
+      const savedLogo = localStorage.getItem('logo');
+
+      if (savedLogo) {
+        setLogo(savedLogo);
+      } else {
+        const res = await getLogoFromFirestore();
+        if (res != '') {
+          setLogo(res);
+        }
+      }
+
+      if (savedSettings) {
+        setSettings(JSON.parse(savedSettings));
+        console.log(
+          'Loaded settings from localStorage:',
+          JSON.parse(savedSettings),
+        );
+      }
+
+
+      hasInitialized.current = true;;
+    }
+    asyncWrapper()
   }, []);
 
   useEffect(() => {

@@ -1,12 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as SimpleWebAuthnServer from '@simplewebauthn/server'
-import base64url from 'base64url'
-
-const rp = "www.invoicely.matthewautjoa.tech"
-let fakeMemoryForChallenge: Record<string, string> = {}
-export const POST = async (req: NextRequest): Promise<NextResponse<unknown>> => {
+import admin from 'firebase-admin'
+import { rp, setPasskeyCookie } from "@/app/lib/passkeyHelper";
+import { WebAuthnCredential, AuthenticatorTransportFuture } from '@simplewebauthn/types'
+import { sign } from "jsonwebtoken";
+if (admin.apps.length === 0) {
+    admin.initializeApp({
+        credential: admin.credential.cert({
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
+        }),
+        databaseURL: "invoicely-f9dec.firebasestorage.app"
+    });
+    admin.firestore().settings({ ignoreUndefinedProperties: true })
+}
+let firestore = admin.firestore()
+export const POST = async (req: NextRequest): Promise<NextResponse> => {
     const username = req.headers.get("username") as string || ""
-
+    const body = await req.json()
+    console.log(body)
     if (username === "") {
         return NextResponse.json({
             error: 'Username required'
@@ -14,33 +27,91 @@ export const POST = async (req: NextRequest): Promise<NextResponse<unknown>> => 
             status: 400,
         })
     }
-    // let verification;
-    // try {
-    //     verification = await SimpleWebAuthnServer.verifyRegistrationResponse({
-    //         response: req.body.data,
-    //         expectedChallenge: challenges[username],
-    //         expectedOrigin: expectedOrigin
-    //     });
-    // } catch (error) {
-    //     console.error(error);
-    //     return NextResponse.json({
-    //         error
-    //     }, { status: 400 })
-    // }
-    // const { verified, registrationInfo } = verification;
-    // if (verified) {
-    //     users[username] = registrationInfo;
-    //     return res.status(200).send(true);
-    // }
+    if (body === null) {
+        return NextResponse.json({
+            error: 'Body required'
+        }, {
+            status: 400,
+        })
+    }
+    let verification;
+    const challenges = firestore!.collection('challenges').doc(username)
+    const users = firestore!.collection('users').doc(username)
+    const challengesData = (await challenges.get()).data()
+    if (challenges === null) {
+        return NextResponse.json({
+            error: 'Please start the passkey registration process again'
+        }, {
+            status: 400,
+        })
+    }
+
+    try {
+        verification = await SimpleWebAuthnServer.verifyRegistrationResponse({
+            response: body,
+            expectedChallenge: challengesData!["challenge"],
+            expectedOrigin: `http://localhost:3000`,
+            expectedRPID: `${rp}`,
+            requireUserPresence: false,
+            requireUserVerification: false
+        });
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({
+            error
+        }, { status: 400 })
+    }
+    const { verified, registrationInfo } = verification;
+    let {
+        fmt,
+        aaguid,
+        credential,
+        credentialType,
+        attestationObject,
+        userVerified,
+        credentialDeviceType,
+        credentialBackedUp,
+        origin
+    } = registrationInfo as any
+    let credentialTransport = (credential as WebAuthnCredential).transports
+    const convertedCredential = Buffer.from((credential as WebAuthnCredential).publicKey).toString('base64')
+
+    const { id,
+        counter } = (credential as WebAuthnCredential)
+    const o: Record<string, string | number | {}> = {
+        fmt, aaguid,
+        credentialType,
+        attestationObject,
+        userVerified,
+        credentialDeviceType,
+        credentialBackedUp,
+        origin,
+    }
+
+    const cred: Record<string, any> = {
+        convertedCredential,
+        id,
+        counter
+    }
+    if (credentialTransport !== undefined) {
+        cred["transport"] = credentialTransport
+    }
+    o["credential"] = cred
+    if (verified) {
+        await users.create({
+            o,
+            "credentialId": registrationInfo?.credential.id
+        });
+        const token = sign({ sub: username }, process.env.JWT_SECRET!, { expiresIn: "7d" })
+        const tempRes = NextResponse.json({
+            status: "SUCCESS"
+        }, { status: 200 })
+        const cookie = setPasskeyCookie(tempRes, username, token)
+        return cookie
+    }
 
     return NextResponse.json({
-        status: "SUCCESS"
-    }, { status: 200 })
+        status: "UNKNOWN"
+    }, { status: 404 })
 }
 
-function getNewChallenge() {
-    return Math.random().toString(36).substring(2);
-}
-function convertChallenge(challenge: string) {
-    return btoa(challenge).replaceAll('=', '');
-}

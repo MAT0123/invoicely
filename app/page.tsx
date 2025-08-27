@@ -11,16 +11,20 @@ import InvoiceDashboard from './home/page';
 import AuthForms from './authentication/page';
 
 export default function Home() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (app) {
       const auth = getAuth(app);
       const unsubscribe = onAuthStateChanged(auth, (user) => {
-        setUser(user);
-        setLoading(false); //
+        const passkeyCookiesAvailable = document.cookie.includes('passkey')
+        
+        if (passkeyCookiesAvailable || user) {
+          setUser(true);
+        }
+        setLoading(false);
         console.log('Change in user');
       });
       // return unsubscribe()
