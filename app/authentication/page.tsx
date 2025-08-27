@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 import { app, auth, db } from '../lib/firebaseConfig';
 import Link from 'next/link';
 import { v4 } from 'uuid'
-import { b64encode, prepLoginsOptions, prepRegistrationOptions } from '../lib/passkeyHelper';
+import { b64encode, prepLoginsOptions, prepRegistrationOptions, registerPasskey } from '../lib/passkeyHelper';
 import { PublicKeyOptions, WebAuthnOptions } from '../types/passkeyTypes';
 import { startAuthentication, PublicKeyCredentialHint, startRegistration, WebAuthnError } from '@simplewebauthn/browser'
 import { PublicKeyCredentialDescriptorJSON } from '@simplewebauthn/types'
@@ -166,49 +166,50 @@ const AuthForms: React.FC = () => {
             return
           }
         }
-        let options = await fetch('/api/register/start', {
-          method: "POST",
-          signal: abortController.signal,
-          headers: {
-            username
-          }
-        })
-        const json: any = await options.json()
-        const pubKey = json.pubKey as PublicKeyCredentialCreationOptionsJSON
-        console.log(`client_register: pubKey${pubKey}`)
+        // let options = await fetch('/api/register/start', {
+        //   method: "POST",
+        //   signal: abortController.signal,
+        //   headers: {
+        //     username
+        //   }
+        // })
+        // const json: any = await options.json()
+        // const pubKey = json.pubKey as PublicKeyCredentialCreationOptionsJSON
+        // console.log(`client_register: pubKey${pubKey}`)
 
-        console.log(pubKey)
-        if (!pubKey || !pubKey.challenge) {
-          throw new Error('Missing challenge in server response');
-        }
+        // console.log(pubKey)
+        // if (!pubKey || !pubKey.challenge) {
+        //   throw new Error('Missing challenge in server response');
+        // }
 
-        let asseResp;
+        // let asseResp;
 
-        asseResp = await startRegistration({
-          optionsJSON: {
-            ...pubKey,
-            attestation: pubKey.attestation as AttestationConveyancePreference | undefined,
-            hints: pubKey.hints as PublicKeyCredentialHint[] | undefined,
-            excludeCredentials: Array.isArray(pubKey.excludeCredentials)
-              ? pubKey.excludeCredentials.map((ec) => ({
-                type: "public-key",
-                id: ec.id,
-                transports: ec.transports as string[] | undefined,
-              })) as PublicKeyCredentialDescriptorJSON[]
-              : undefined
-          }
-        });
+        // asseResp = await startRegistration({
+        //   optionsJSON: {
+        //     ...pubKey,
+        //     attestation: pubKey.attestation as AttestationConveyancePreference | undefined,
+        //     hints: pubKey.hints as PublicKeyCredentialHint[] | undefined,
+        //     excludeCredentials: Array.isArray(pubKey.excludeCredentials)
+        //       ? pubKey.excludeCredentials.map((ec) => ({
+        //         type: "public-key",
+        //         id: ec.id,
+        //         transports: ec.transports as string[] | undefined,
+        //       })) as PublicKeyCredentialDescriptorJSON[]
+        //       : undefined
+        //   }
+        // });
 
-        console.log(`asseResp${JSON.stringify(asseResp)}`)
-        const sendRes = await fetch('/api/register/finish', {
-          method: "POST",
-          headers: {
-            username,
-            "content-type": "application/json"
-          },
-          body: JSON.stringify(asseResp)
-        })
-        if (sendRes.status == 200) {
+        // console.log(`asseResp${JSON.stringify(asseResp)}`)
+        // const sendRes = await fetch('/api/register/finish', {
+        //   method: "POST",
+        //   headers: {
+        //     username,
+        //     "content-type": "application/json"
+        //   },
+        //   body: JSON.stringify(asseResp)
+        // })
+        const status = await registerPasskey(username)
+        if (status == 200) {
           router.replace("/home")
         }
       }

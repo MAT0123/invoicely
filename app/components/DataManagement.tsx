@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CompanySettings, Invoice } from '../types/invoiceTypes';
-import { signOut } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import { auth } from '../lib/firebaseConfig';
 import { useRouter } from 'next/navigation';
+import { registerPasskey } from '../lib/passkeyHelper';
 export default function DataManagement({
   invoices,
   settings,
@@ -22,7 +23,7 @@ export default function DataManagement({
     <div className="pt-6 border-t-2 border-gray-300">
       <h3 className="text-lg font-bold text-black mb-4">Data Management</h3>
       <div className="w-full flex justify-center items-center">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-2xl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full grid-auto-rows max-w-2xl">
           <button
             onClick={() => {
               const dataStr = JSON.stringify({ invoices, settings }, null, 2);
@@ -109,13 +110,17 @@ export default function DataManagement({
             Log Out
           </button>
           {
-            isPasskey &&
+            !isPasskey &&
             (
               <button
                 onClick={async () => {
+                  const currentUser = getAuth().currentUser?.email
+                  if (currentUser) {
+                    registerPasskey(currentUser)
 
+                  }
                 }}
-                className="col-span-1 md:col-span-3 px-4 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors border-2 border-red-700 w-full "
+                className="col-span-1 md:col-span-3 px-4 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-700 transition-colors border-2 w-full "
               >
                 Associate Passkey
               </button>

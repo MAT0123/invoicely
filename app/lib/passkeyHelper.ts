@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { PublicKeyOptions, WebAuthnOptions } from "../types/passkeyTypes";
-
+import { PublicKeyCredentialHint, startRegistration } from "@simplewebauthn/browser";
+import { PublicKeyCredentialDescriptorJSON } from '@simplewebauthn/types'
 
 export function getNewChallenge() {
     return Math.random().toString(36).substring(2);
@@ -104,5 +105,49 @@ export function prepLoginsOptions(opts: WebAuthnOptions | { pubKey: WebAuthnOpti
 
     return publicKey;
 }
+export async function registerPasskey(username: string) {
+    let options = await fetch('/api/register/start', {
+        method: "POST",
+        headers: {
+            username
+        }
+    })
+    const json: any = await options.json()
+    const pubKey = json.pubKey as PublicKeyCredentialCreationOptionsJSON
+    console.log(`client_register: pubKey${pubKey}`)
 
+    console.log(pubKey)
+    if (!pubKey || !pubKey.challenge) {
+        throw new Error('Missing challenge in server response');
+    }
+
+    let asseResp;
+
+    asseResp = await startRegistration({
+        optionsJSON: {
+            ...pubKey,
+            attestation: pubKey.attestation as AttestationConveyancePreference | undefined,
+            hints: pubKey.hints as PublicKeyCredentialHint[] | undefined,
+            excludeCredentials: Array.isArray(pubKey.excludeCredentials)
+                ? pubKey.excludeCredentials.map((ec) => ({
+                    type: "public-key",
+                    id: ec.id,
+                    transports: ec.transports as string[] | undefined,
+                })) as PublicKeyCredentialDescriptorJSON[]
+                : undefined
+        }
+    });
+
+    console.log(`asseResp${JSON.stringify(asseResp)}`)
+    const sendRes = await fetch('/api/register/finish', {
+        method: "POST",
+        headers: {
+            username,
+            "content-type": "application/json"
+        },
+        body: JSON.stringify(asseResp)
+    })
+
+    return sendRes.status
+}
 export const rp = process.env.NODE_ENV == "production" ? "invoicely.matthewautjoa" : "localhost"
