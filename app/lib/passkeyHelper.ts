@@ -202,5 +202,5 @@ export async function registerPasskey(username: string) {
 
     return sendRes
 }
-export const rp = process.env.NODE_ENV == "production" ? "invoicely.matthewautjoa" : "localhost"
+export const rp = process.env.NODE_ENV == "production" ? "invoicely.matthewautjoa.tech" : "localhost"
 export const origin = process.env.NODE_ENV == "production" ? "https://invoicely.matthewautjoa.tech" : "http://localhost:3000"
