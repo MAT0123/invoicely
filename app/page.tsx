@@ -19,13 +19,10 @@ export default function Home() {
     if (app) {
       const auth = getAuth(app);
       const unsubscribe = onAuthStateChanged(auth, (user) => {
-        const passkeyCookiesAvailable = document.cookie.includes('passkey')
-        
-        if (passkeyCookiesAvailable || user) {
+        if (user) {
           setUser(true);
         }
         setLoading(false);
-        console.log('Change in user');
       });
       // return unsubscribe()
     }

@@ -1,3 +1,4 @@
+import { AuthenticatorTransportFuture } from "@simplewebauthn/types";
 
 
 export type PublicKeyOptions = {
@@ -23,6 +24,12 @@ export type PublicKeyOptions = {
     };
 };
 
+export type Credential = {
+    convertedCredential: string
+    id: string
+    counter: number
+    transport?: AuthenticatorTransportFuture[]
+}
 export type WebAuthnOptions = {
     challenge: string;
     rp: string;

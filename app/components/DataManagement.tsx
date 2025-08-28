@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CompanySettings, Invoice } from '../types/invoiceTypes';
 import { getAuth, signOut } from 'firebase/auth';
-import { auth } from '../lib/firebaseConfig';
+import { auth, db } from '../lib/firebaseConfig';
 import { useRouter } from 'next/navigation';
 import { registerPasskey } from '../lib/passkeyHelper';
+import { doc, getDoc } from 'firebase/firestore';
+import { verifyToken } from '../lib/firebaseService';
 export default function DataManagement({
   invoices,
   settings,
@@ -18,7 +20,34 @@ export default function DataManagement({
   deleteAllInvoice: () => void;
 }) {
   const router = useRouter()
-  const isPasskey = document.cookie.includes("passkey")
+  const [passkeyState, setPasskeyState] = useState(true)
+
+  useEffect(() => {
+    const currentUser = auth.currentUser
+    const email = auth.currentUser?.email
+
+    if (!currentUser) {
+      return;
+    }
+    if (email) {
+      getDoc(doc(db, "users", email)).then((e) => {
+        setPasskeyState(e.exists())
+      })
+      return
+    }
+
+    verifyToken().then((claims) => {
+      getDoc(doc(db, "users", claims["email"] as string)).then((e) => {
+        setPasskeyState(e.exists())
+      })
+    }).catch((e) => {
+      console.log(e)
+    }).finally(() => {
+
+    })
+
+
+  }, [])
   return (
     <div className="pt-6 border-t-2 border-gray-300">
       <h3 className="text-lg font-bold text-black mb-4">Data Management</h3>
@@ -92,35 +121,37 @@ export default function DataManagement({
 
           <button
             onClick={async () => {
-              const passkeyCookiesAvailable = document.cookie.includes('passkey')
-              const passkeyCookie = document.cookie[document.cookie.indexOf("passkey")]
-              if (passkeyCookiesAvailable) {
-                const r = await fetch("/api/logout", {
-                  method: "POST",
-                  credentials: "include"
-                })
-                router.replace("/")
-                console.log(await r.json())
-                return
-              }
+              // const passkeyCookiesAvailable = document.cookie.includes('passkey')
+              // if (!getAuth().currentUser) {
+              //   const r = await fetch("/api/logout", {
+              //     method: "POST",
+              //     credentials: "include"
+              //   })
+              //   router.replace("/")
+              //   console.log(await r.json())
+              //   return
+              // }
               await signOut(auth);
+              router.replace("/authentication")
             }}
             className="col-span-1 md:col-span-3 px-4 py-3 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors border-2 border-red-700 w-full "
           >
             Log Out
           </button>
           {
-            !isPasskey &&
+            !passkeyState &&
             (
               <button
                 onClick={async () => {
                   const currentUser = getAuth().currentUser?.email
                   if (currentUser) {
-                    registerPasskey(currentUser)
-
+                    const status = await registerPasskey(currentUser)
+                    if (status.status == 200) {
+                      setPasskeyState(true)
+                    }
                   }
                 }}
-                className="col-span-1 md:col-span-3 px-4 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-700 transition-colors border-2 w-full "
+                className="col-span-1 md:col-span-3 px-4 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-700 transition-colors border-2 w-full"
               >
                 Associate Passkey
               </button>

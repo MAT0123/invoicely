@@ -9,7 +9,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { app, db } from '../lib/firebaseConfig';
+import { app, auth, db } from '../lib/firebaseConfig';
 import {
   Invoice,
   InvoicesWithFirestoreID,
@@ -127,7 +127,21 @@ export async function deleteAllInvoicesFromFirestore(
     }
   }
 }
+export const verifyToken = async (): Promise<Record<string, any>> => {
+  const token = await auth.currentUser?.getIdTokenResult(true)
+  console.log(token?.claims)
+  if (token?.claims["attesId"] && token.claims && token) {
+    const username = token.claims["username"] as string
+    const id = token.claims["attesId"] as string
+    const docs = (await getDoc(doc(db, 'credentialToUser', id))).data()
+    if (!docs) throw new Error("User does not use passkey")
+    if (docs["username"] == username) {
+      return { ...token.claims }
+    }
+  }
 
+  throw new Error("Something failed")
+}
 export const getAppCheckToken = async () => {
   try {
     const appCheck = initializeAppCheck(app, {

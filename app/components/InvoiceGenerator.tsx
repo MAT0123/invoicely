@@ -163,7 +163,7 @@ const InvoicePDFGenerator: React.FC<{
   const handleCreateAndDownload = async () => {
 
     const auth = getAuth(app);
-    const userID = auth.currentUser?.uid;
+    const userID = auth.currentUser;
 
     if (userID) {
       if (invoiceData.total >= 0.1) {

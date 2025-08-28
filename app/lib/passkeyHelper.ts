@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { PublicKeyOptions, WebAuthnOptions } from "../types/passkeyTypes";
-import { PublicKeyCredentialHint, startRegistration } from "@simplewebauthn/browser";
+import { PublicKeyCredentialHint, startAuthentication, startRegistration, WebAuthnError } from "@simplewebauthn/browser";
 import { PublicKeyCredentialDescriptorJSON } from '@simplewebauthn/types'
+import { signInWithCustomToken } from "firebase/auth";
+import { auth } from "./firebaseConfig";
 
 export function getNewChallenge() {
     return Math.random().toString(36).substring(2);
@@ -105,6 +107,62 @@ export function prepLoginsOptions(opts: WebAuthnOptions | { pubKey: WebAuthnOpti
 
     return publicKey;
 }
+export async function loginPasskey() {
+    try {
+        const abortController = new AbortController()
+        // const timeout = setTimeout(() => { abortController.abort() }, 10000)
+        let usernamelessOptions = await fetch('/api/login/start', {
+            method: "POST",
+            signal: abortController.signal,
+        })
+        const json = await usernamelessOptions.json()
+        const option = json.options as PublicKeyCredentialRequestOptionsJSON
+        const sessionId = json.sessionId as string
+
+        const attes = await startAuthentication({
+            optionsJSON: {
+                ...option,
+                allowCredentials: option.allowCredentials as PublicKeyCredentialDescriptorJSON[] | undefined,
+                challenge: option.challenge,
+                extensions: option.extensions,
+                userVerification: option.userVerification as UserVerificationRequirement | undefined,
+                hints: option.hints as PublicKeyCredentialHint[] | undefined,
+            },
+
+            useBrowserAutofill: false,
+
+        })
+
+        if (!attes) return false
+
+        const sendRes = await fetch('/api/login/finish', {
+            method: "POST",
+            headers: {
+                sessionId,
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                attes
+            })
+        })
+        const sendResJson = await sendRes.json()
+        console.log(sendResJson)
+
+        const { token } = sendResJson
+        console.log(token)
+        const fbSignIn = await signInWithCustomToken(auth, token)
+        if (fbSignIn.user) {
+            console.log(`fb_user${JSON.stringify(fbSignIn.user)}`)
+            return true
+        }
+        return false
+    }
+    catch (e) {
+        if (e instanceof WebAuthnError) {
+            return false
+        }
+    }
+}
 export async function registerPasskey(username: string) {
     let options = await fetch('/api/register/start', {
         method: "POST",
@@ -128,13 +186,7 @@ export async function registerPasskey(username: string) {
             ...pubKey,
             attestation: pubKey.attestation as AttestationConveyancePreference | undefined,
             hints: pubKey.hints as PublicKeyCredentialHint[] | undefined,
-            excludeCredentials: Array.isArray(pubKey.excludeCredentials)
-                ? pubKey.excludeCredentials.map((ec) => ({
-                    type: "public-key",
-                    id: ec.id,
-                    transports: ec.transports as string[] | undefined,
-                })) as PublicKeyCredentialDescriptorJSON[]
-                : undefined
+            excludeCredentials: pubKey.excludeCredentials as PublicKeyCredentialDescriptorJSON[] | undefined
         }
     });
 
@@ -148,6 +200,6 @@ export async function registerPasskey(username: string) {
         body: JSON.stringify(asseResp)
     })
 
-    return sendRes.status
+    return sendRes
 }
 export const rp = process.env.NODE_ENV == "production" ? "invoicely.matthewautjoa" : "localhost"

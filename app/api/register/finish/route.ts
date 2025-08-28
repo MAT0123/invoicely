@@ -36,7 +36,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     }
     let verification;
     const challenges = firestore!.collection('challenges').doc(username)
-    const users = firestore!.collection('users').doc(username)
+
     const challengesData = (await challenges.get()).data()
     if (challenges === null) {
         return NextResponse.json({
@@ -62,6 +62,8 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         }, { status: 400 })
     }
     const { verified, registrationInfo } = verification;
+
+
     let {
         fmt,
         aaguid,
@@ -78,6 +80,9 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 
     const { id,
         counter } = (credential as WebAuthnCredential)
+    const users = firestore!.collection('users').doc(username)
+    const credentialToUser = firestore!.collection('credentialToUser').doc(id)
+
     const o: Record<string, string | number | {}> = {
         fmt, aaguid,
         credentialType,
@@ -87,7 +92,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         credentialBackedUp,
         origin,
     }
-
     const cred: Record<string, any> = {
         convertedCredential,
         id,
@@ -98,16 +102,34 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     }
     o["credential"] = cred
     if (verified) {
+        await credentialToUser.create({
+            username
+        })
+
         await users.create({
             o,
-            "credentialId": registrationInfo?.credential.id
+            credentialId: registrationInfo?.credential.id
         });
         const token = sign({ sub: username }, process.env.JWT_SECRET!, { expiresIn: "7d" })
+        const fb_token = await admin.auth().createCustomToken(username)
         const tempRes = NextResponse.json({
-            status: "SUCCESS"
+            fb_token
         }, { status: 200 })
-        const cookie = setPasskeyCookie(tempRes, username, token)
-        return cookie
+
+        //const cookie = setPasskeyCookie(tempRes, username, token)
+        tempRes.cookies.set("passkey", username, {
+            maxAge: 60 * 60 * 24 * 7
+        })
+        tempRes.cookies.set("invoicely-token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
+            maxAge: 60 * 60 * 24 * 7, // 7 days
+        })
+
+        //return cookie
+        return tempRes
     }
 
     return NextResponse.json({
