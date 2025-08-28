@@ -9,6 +9,7 @@ import {
   inMemoryPersistence,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithCredential,
 
 } from 'firebase/auth'; // Adjust the import path as necessary
 import { useRouter } from 'next/navigation';
@@ -117,77 +118,12 @@ const AuthForms: React.FC = () => {
     }
   };
   const handlePasskeyLogin = async () => {
-    // if (prevCred == null) {
-
-
-    // try {
-    //   const abortController = new AbortController()
-    //   // const timeout = setTimeout(() => { abortController.abort() }, 10000)
-    //   let usernamelessOptions = await fetch('/api/login/start', {
-    //     method: "POST",
-    //     signal: abortController.signal,
-    //   })
-    //   const json = await usernamelessOptions.json()
-    //   const option = json.options as PublicKeyCredentialRequestOptionsJSON
-    //   const sessionId = json.sessionId as string
-
-    //   const attes = await startAuthentication({
-    //     optionsJSON: {
-    //       ...option,
-    //       allowCredentials: option.allowCredentials as PublicKeyCredentialDescriptorJSON[] | undefined,
-    //       challenge: option.challenge,
-    //       extensions: option.extensions,
-    //       userVerification: option.userVerification as UserVerificationRequirement | undefined,
-    //       hints: option.hints as PublicKeyCredentialHint[] | undefined,
-    //     },
-    //     useBrowserAutofill: false
-    //   })
-
-    //   if (!attes) return
-
-    //   const sendRes = await fetch('/api/login/finish', {
-    //     method: "POST",
-    //     headers: {
-    //       username: sessionId,
-    //       "content-type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //       attes
-    //     })
-    //   })
-    //   const sendResJson = await sendRes.json()
-    //   const { token } = sendResJson
-    //   const fbSignIn = await signInWithCustomToken(auth, token)
-    //   if (fbSignIn.user) {
-    //     router.replace("/home")
-    //     return
-    //   }
-    //   console.log("error mate")
-    //   return
-
-
-
-    // }
-    // catch (e) {
-    //   if (e instanceof WebAuthnError) {
-    //     console.log(e)
-    //     return
-    //   }
-    // }
     const loginRes = await loginPasskey()
     if (loginRes) {
       router.replace("home")
       return
     }
-    // const res = await registerPasskey(username)
-    // const sendResJson = await res.json()
-    // const { token } = sendResJson
-    // const fbSignIn = await signInWithCustomToken(auth, token)
-    // if (fbSignIn.user) {
-    //   router.replace("/home")
-    // }
     return
-
   }
 
   const validateSignIn = (): boolean => {
@@ -263,10 +199,17 @@ const AuthForms: React.FC = () => {
     const { google } = window as any
     if (!google?.accounts?.id) return;
     google.accounts.id.initialize({
-      client_id: '465747096133-sj0hhd2rlirj8oo4vhakpv1bdiv8ivbu.apps.googleusercontent.com',
+      client_id: "465747096133-sj0hhd2rlirj8oo4vhakpv1bdiv8ivbu.apps.googleusercontent.com",
       callback: async (response: any) => {
-
-      }
+        try {
+          const idToken = response.credential
+          const cred = GoogleAuthProvider.credential(idToken)
+          await signInWithCredential(auth, cred)
+          router.replace('/home')
+        } catch (e) {
+          console.log(e)
+        }
+      },
     });
     google.accounts.id.prompt();
   }
