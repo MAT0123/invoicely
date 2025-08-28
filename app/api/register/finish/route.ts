@@ -4,6 +4,7 @@ import admin from 'firebase-admin'
 import { rp, setPasskeyCookie } from "@/app/lib/passkeyHelper";
 import { WebAuthnCredential, AuthenticatorTransportFuture } from '@simplewebauthn/types'
 import { sign } from "jsonwebtoken";
+import { origin as expectedOrigin } from "@/app/lib/passkeyHelper";
 if (admin.apps.length === 0) {
     admin.initializeApp({
         credential: admin.credential.cert({
@@ -50,7 +51,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         verification = await SimpleWebAuthnServer.verifyRegistrationResponse({
             response: body,
             expectedChallenge: challengesData!["challenge"],
-            expectedOrigin: origin,
+            expectedOrigin: expectedOrigin,
             expectedRPID: `${rp}`,
             requireUserPresence: false,
             requireUserVerification: false
