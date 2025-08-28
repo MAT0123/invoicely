@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   signInWithEmailAndPassword,
   getAuth,
@@ -9,16 +9,13 @@ import {
   inMemoryPersistence,
   GoogleAuthProvider,
   signInWithPopup,
-  browserPopupRedirectResolver,
-  signInWithRedirect,
 
 } from 'firebase/auth'; // Adjust the import path as necessary
 import { useRouter } from 'next/navigation';
 import { app, auth, db } from '../lib/firebaseConfig';
 import Link from 'next/link';
-import { v4 } from 'uuid'
 import { loginPasskey } from '../lib/passkeyHelper';
-
+import Script from 'next/script';
 interface SignUpFormData {
   firstName: string;
   lastName: string;
@@ -261,9 +258,23 @@ const AuthForms: React.FC = () => {
     setShowPassword(false);
     setShowConfirmPassword(false);
   };
+  const yoloGoogle = () => {
+    // @ts-ignore
+    const { google } = window as any
+    if (!google?.accounts?.id) return;
+    google.accounts.id.initialize({
+      client_id: '465747096133-sj0hhd2rlirj8oo4vhakpv1bdiv8ivbu.apps.googleusercontent.com',
+      callback: async (response: any) => {
 
+      }
+    });
+    google.accounts.id.prompt();
+  }
   return (
-    <div className="min-h-screen bg-white py-8">
+
+    <div className="min-h-screen bg-white py-8" id='firebaseui-auth-container'>
+      <Script src='https://accounts.google.com/gsi/client' onLoad={yoloGoogle}>
+      </Script>
       <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
