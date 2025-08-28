@@ -25,8 +25,7 @@ import {
 } from '../types/invoiceTypes';
 import toast, { Toaster } from 'react-hot-toast';
 import { InvoicePDF } from './InvoiceTemplate';
-import { error } from 'console';
-import { getAppCheckToken } from '../lib/firebaseService';
+
 
 Font.register({
   family: 'Roboto',

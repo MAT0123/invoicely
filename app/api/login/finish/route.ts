@@ -90,7 +90,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
                     counter: credentials.counter
                 },
                 expectedRPID: rp,
-                expectedOrigin: "http://localhost:3000",
+                expectedOrigin: origin,
                 requireUserVerification: false,
 
             });

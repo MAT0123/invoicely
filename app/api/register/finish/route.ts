@@ -50,7 +50,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         verification = await SimpleWebAuthnServer.verifyRegistrationResponse({
             response: body,
             expectedChallenge: challengesData!["challenge"],
-            expectedOrigin: `http://localhost:3000`,
+            expectedOrigin: origin,
             expectedRPID: `${rp}`,
             requireUserPresence: false,
             requireUserVerification: false
