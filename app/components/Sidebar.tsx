@@ -1,3 +1,4 @@
+"use client"
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 
 import {
@@ -9,35 +10,40 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    useSidebar,
 } from "@/components/ui/sidebar"
+import { useContext, useState } from "react"
+import { StoreContext } from "../page"
+import { TabType } from "../types/invoiceTypes"
 
-// Menu items.
 const items = [
     {
         title: "Home",
-        url: "/",
+        url: "dashboard",
         icon: Home,
     },
     {
         title: "Create Invoice",
-        url: "#",
+        url: "create",
         icon: Inbox,
     },
     {
         title: "All Invoices",
-        url: "#",
+        url: "invoices",
         icon: Calendar,
     },
     {
         title: "Settings",
-        url: "",
+        url: "settings",
         icon: Settings,
     },
 ]
 
 export function AppSidebar() {
+    const store = useContext(StoreContext)
+    const sidebar = useSidebar()
     return (
-        <Sidebar variant="floating">
+        <Sidebar variant="floating" >
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarGroupLabel>Application</SidebarGroupLabel>
@@ -46,10 +52,16 @@ export function AppSidebar() {
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                        <button className="block" onClick={() => {
+                                            store.setState((state) => ({
+                                                activeTab: item.url as TabType
+                                            }))
+                                            sidebar.setOpenMobile(false)
+                                        }}>
                                             <item.icon />
                                             <span>{item.title}</span>
-                                        </a>
+                                        </button>
+
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}

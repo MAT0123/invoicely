@@ -16,8 +16,11 @@ export default function Header({
             <p className="text-black font-medium">Invoice Management System</p>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="text-right">
-              <p className="text-sm text-black font-medium">Total Revenue</p>
+            <div className="text-right ">
+              <div>
+                <p className="text-sm font-medium text-black">Total Revenue</p>
+                <p className="text-xs text-gray-400 mb-3">This month</p>
+              </div>
               <p className="text-2xl font-bold text-green-600">
                 ${totalRevenue.toFixed(2)}
               </p>

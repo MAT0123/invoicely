@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Invoice, StatusType, InvoiceData } from '../types/invoiceTypes';
+import { Timestamp } from 'firebase/firestore';
 
 export function convertInvoiceDataToInvoice(
   data: InvoiceData,
@@ -24,5 +25,6 @@ export function convertInvoiceDataToInvoice(
     notes: data.notes,
     createdAt: timestamp,
     updatedAt: timestamp,
+    lastUpdated: data.lastUpdated
   };
 }

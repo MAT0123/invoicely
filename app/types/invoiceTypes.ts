@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface LineItem {
   id: string;
   description: string;
@@ -28,6 +30,8 @@ export interface InvoiceData {
   notes: string;
 
   status: StatusType;
+  lastUpdated?: Timestamp;
+
 }
 export interface InvoicesWithFirestoreID {
   data: InvoiceData;
@@ -43,6 +47,7 @@ export interface Invoice {
   clientName: string;
   clientEmail: string;
   invoiceDate: string;
+  lastUpdated?: Timestamp
   dueDate: string;
   status: StatusType;
   items: LineItem[];

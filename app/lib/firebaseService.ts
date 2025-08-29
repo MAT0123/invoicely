@@ -5,6 +5,7 @@ import {
   DocumentData,
   getDoc,
   getDocs,
+  serverTimestamp,
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
@@ -35,7 +36,7 @@ export async function getSavedInvoicesFromFirestore(
     const item = await getDocs(collection(db, 'users', userID, 'invoices'));
     const invoices = item.docs.map((doc) => ({
       id: doc.id,
-      data: doc.data() as InvoiceData,
+      data: doc.data()
     }));
     return invoices;
   } else {
@@ -51,11 +52,17 @@ export async function updateInvoiceStatusInFirestore(
   const auth = getAuth(app);
   const userID = auth.currentUser?.uid;
 
-  if (userID) {
-    await updateDoc(doc(db, 'users', userID, 'invoices', invoiceId), {
-      status,
-    });
-  }
+  if (!userID) { return }
+  const ref = doc(db, 'users', userID, 'invoices', invoiceId);
+
+  await setDoc(ref, {
+    status,
+    lastUpdated: serverTimestamp()
+  }, { merge: true });
+  // await setDoc(doc(db, 'users', userID, 'invoices', invoiceId), {
+  //   lastUpdated: Date.now()
+  // })
+
 }
 
 export async function deleteInvoiceFromFirestore(

@@ -9,6 +9,7 @@ import {
   CompanySettings,
   StatusType,
 } from '../types/invoiceTypes';
+import { updateInvoiceStatusInFirestore } from '../lib/firebaseService';
 
 export const useInvoice = (
   invoices: Invoice[],
@@ -100,7 +101,8 @@ export const useInvoice = (
       const auth = getAuth(app);
       const userID = auth.currentUser?.uid;
       if (userID) {
-        await updateDoc(doc(db, 'users', userID, 'invoices', id), { status });
+        await updateInvoiceStatusInFirestore(id, status)
+        //await updateDoc(doc(db, 'users', userID, 'invoices', id), { status });
       }
     },
     [setInvoices],

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect, useContext } from 'react';
 import InvoicePDFGenerator from '../components/InvoiceGenerator';
 import {
   collection,
@@ -33,8 +33,10 @@ import { checkIfCollectionExist, getLogoFromFirestore } from '../lib/firebaseSer
 import dynamic from 'next/dynamic';
 import { Sidebar, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '../components/Sidebar';
+import { StoreContext } from '../page';
 
 const InvoiceDashboard: React.FC = () => {
+  const store = useContext(StoreContext)
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [settings, setSettings] = useState<CompanySettings>({
@@ -152,6 +154,7 @@ const InvoiceDashboard: React.FC = () => {
       localStorage.setItem('companySettings', JSON.stringify(settings));
       console.log('saving settings');
     }
+
   }, [settings]);
   const {
     generateInvoiceNumber,
@@ -184,6 +187,12 @@ const InvoiceDashboard: React.FC = () => {
 
   const dashboardStats = dashboardStatsFN(invoices);
 
+  store.subscribe((state, prev) => {
+    if (state.activeTab !== prev.activeTab) {
+      setActiveTab(state.activeTab)
+    }
+  })
+  
   if (!mounted) return
   return (
 

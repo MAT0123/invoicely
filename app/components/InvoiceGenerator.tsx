@@ -21,7 +21,6 @@ import {
   Invoice,
   InvoiceData,
   LineItem,
-  StatusType,
 } from '../types/invoiceTypes';
 import toast, { Toaster } from 'react-hot-toast';
 import { InvoicePDF } from './InvoiceTemplate';
