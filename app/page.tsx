@@ -9,6 +9,8 @@ import { app } from './lib/firebaseConfig';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import InvoiceDashboard from './home/page';
 import AuthForms from './authentication/page';
+import { AppSidebar } from './components/Sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 
 export default function Home() {
   const [user, setUser] = useState<boolean | null>(null);
@@ -37,7 +39,14 @@ export default function Home() {
   }
   return (
     <div className="bg-white min-h-screen flex items-center justify-center">
-      {user ? <InvoiceDashboard /> : <AuthForms />}
+      <SidebarProvider style={{
+        display: 'flex',
+        flexFlow: "column",
+        justifyContent: "center"
+      }} defaultOpen={false}>
+        <AppSidebar />
+        {user ? <InvoiceDashboard /> : <AuthForms />}
+      </SidebarProvider>
     </div>
   );
 }

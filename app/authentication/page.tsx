@@ -232,8 +232,8 @@ const AuthForms: React.FC = () => {
         </div>
 
         {/* Form Toggle */}
-        <div className="bg-gray-100 p-1 rounded-lg mb-6 border-2 border-gray-400">
-          <div className="grid grid-cols-2 gap-1">
+        <div className="bg-gray-100 p-1 rounded-lg mb-6 border-2 border-gray-400 transition-transform duration-300">
+          <div className="grid grid-cols-2 gap-1 transition-transform duration-300">
             <button
               type="button"
               onClick={() => !isSignUp && toggleForm()}

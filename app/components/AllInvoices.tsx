@@ -41,22 +41,17 @@ const AllInvoices: React.FC<AllInvoicesProps> = ({
         </div>
       ) : (
         <div className="bg-white rounded-lg shadow-lg border-2 border-gray-400 overflow-hidden">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto ">
             <table className="w-full">
               <thead className="bg-gray-100 border-b-2 border-gray-400">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-black">
-                    Due Date
-                  </th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-black">
-                    Status
-                  </th>
-                  <th className="px-6 py-4 text-right text-sm font-bold text-black">
-                    Amount
-                  </th>
-                  <th className="px-6 py-4 text-center text-sm font-bold text-black">
-                    Actions
-                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-black">Invoice #</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-black">Client</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-black">Invoice Date</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-black">Due Date</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-black">Status</th>
+                  <th className="px-6 py-4 text-right text-sm font-bold text-black">Amount</th>
+                  <th className="px-6 py-4 text-center text-sm font-bold text-black">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">

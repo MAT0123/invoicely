@@ -1,11 +1,10 @@
-'use client';
+"use client"
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { FirebaseApp, initializeApp } from 'firebase/app';
-import { createContext, useEffect } from 'react';
-import { app } from './lib/firebaseConfig';
 import Script from 'next/script';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { AppSidebar } from './components/Sidebar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -29,16 +28,19 @@ export default function RootLayout({
 }>) {
 
   return (
+
     <html lang="en">
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+
         {children}
+        <Script src="https://www.google.com/recaptcha/enterprise.js?render=6LeTMVwrAAAAAA6QRkCDbDsoku23jaD5Xg6k4gwy"></Script>
       </body>
 
-      <Script src="https://www.google.com/recaptcha/enterprise.js?render=6LeTMVwrAAAAAA6QRkCDbDsoku23jaD5Xg6k4gwy"></Script>
 
-    </html>
+    </html >
+
   );
 }

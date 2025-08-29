@@ -30,6 +30,9 @@ import DataManagement from '../components/DataManagement';
 import Settings from '../components/Settings';
 import { useInvoice } from '../hooks/useInvoice';
 import { checkIfCollectionExist, getLogoFromFirestore } from '../lib/firebaseService';
+import dynamic from 'next/dynamic';
+import { Sidebar, SidebarProvider } from '@/components/ui/sidebar';
+import { AppSidebar } from '../components/Sidebar';
 
 const InvoiceDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
@@ -86,31 +89,16 @@ const InvoiceDashboard: React.FC = () => {
     }
   }
   const router = useRouter();
-
-  const [mounted, setMounted] = useState(false);
   const hasInitialized = useRef(false);
   const [logo, setLogo] = useState('');
-  // useEffect(() => {
-  //   const fet = async () => {
-  //     const res = await fetch('/api/cron-jobs', {
-  //       method: "POST"
-  //     })
-  //   }
-  //   console.log("FETCHING")
-
-  //   fet()
-  // }, [])
+  const [mounted, setMounted] = useState(false)
   useEffect(() => {
-    const asyncWrapper = async () => {
+    (async () => {
 
       const passkeyCookiesAvailable = document.cookie.includes('passkey')
       const passkeyCookie = document.cookie[document.cookie.indexOf("passkey")]
       if (!passkeyCookiesAvailable) {
         router.replace('/')
-        // const passkeyCookies = (await cookies()).get("passkey")
-        // if (passkeyCookies == undefined) {
-        //   router.push('/')
-        // }
       }
       const auth = getAuth(app);
       const user = auth.currentUser
@@ -150,8 +138,9 @@ const InvoiceDashboard: React.FC = () => {
 
 
       hasInitialized.current = true;;
-    }
-    asyncWrapper()
+    })()
+    // asyncWrapper()
+    setMounted(true)
   }, []);
 
   useEffect(() => {
@@ -194,9 +183,13 @@ const InvoiceDashboard: React.FC = () => {
   };
 
   const dashboardStats = dashboardStatsFN(invoices);
+
+  if (!mounted) return
   return (
-    <div className="min-h-screen bg-white">
+
+    <div className="min-h-screen bg-white ">
       {/* Header */}
+
       <Header
         companyName={settings.companyName}
         totalRevenue={dashboardStats.totalRevenue}
