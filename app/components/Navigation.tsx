@@ -15,7 +15,9 @@ export default function Navigation({
 
       <div className="max-w-7xl  flex justify-center">
         <div className='md:hidden w-full'>
-          <button className='px-4 py-3 bg-red-600 text-white font-bold hover:bg-red-700 transition-colors border-2 border-red-700 w-full ' onClick={() => { sidebar.setOpenMobile(true) }}>Show menu</button>
+          <button className='px-4 py-3 bg-red-600 text-white font-bold hover:bg-red-700 transition-colors border-2 border-red-700 w-full ' onClick={() => {
+            sidebar.setOpenMobile(true)
+          }}>Show menu</button>
         </div>
         <div className="flex space-x-8 hidden md:block">
           {[
