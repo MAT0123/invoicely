@@ -1,7 +1,5 @@
 import React from 'react';
 import { CompanySettings } from '../types/invoiceTypes';
-import { doc, setDoc } from 'firebase/firestore';
-import { app, db } from '../lib/firebaseConfig';
 import { uploadImageToFirestore } from '../lib/firebaseService';
 
 export default function Settings({

@@ -2,15 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
   PDFDownloadLink,
   Font,
   pdf,
-  Image,
 } from '@react-pdf/renderer';
 import { addDoc, collection } from 'firebase/firestore';
 import { app, db } from '../lib/firebaseConfig';

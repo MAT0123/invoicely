@@ -12,9 +12,9 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar"
-import { useContext, useState } from "react"
-import { StoreContext } from "../page"
+import { useContext } from "react"
 import { TabType } from "../types/invoiceTypes"
+import { StoreContext } from "../lib/store"
 
 const items = [
     {

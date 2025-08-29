@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabType } from '../types/invoiceTypes';
-import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
+import { useSidebar } from '@/components/ui/sidebar';
 
 export default function Navigation({
   setActiveTab,
